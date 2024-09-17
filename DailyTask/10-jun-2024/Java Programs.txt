@@ -1,0 +1,31 @@
+Here is the next set of programming questions.
+1. Write a program that prints "Hello, World!" to the console.
+2. Create a calculator that performs basic arithmetic operations (+, -, *, /).
+3. Convert a temperature from Fahrenheit to Celsius.
+4. Convert a temperature from Celsius to Fahrenheit.
+5. Check if a given number is odd or even.
+6. Determine if a given number is a prime number.
+7. Calculate the factorial of a given number.
+8. Print the Fibonacci sequence up to a specified number of terms.
+9. Check if a given string is a palindrome.
+10. Reverse a given string.
+11. Calculate the sum of the digits of a given number.
+12. Find the largest of three given numbers.
+13. Determine if a given year is a leap year.
+14. Print the multiplication table for a given number.
+15. Check if a given number is an Armstrong number.
+16. Find the Greatest Common Divisor (GCD) and Least Common Multiple (LCM) of two numbers.
+17. Create a simple number guessing game.
+18. Sort an array of integers in ascending order.
+19. Calculate the sum of all elements in an array.
+20. Find and print duplicate elements in an array.
+21. Add two matrices.
+22. Multiply two matrices.
+23. Count the number of vowels and consonants in a given string.
+24. Count the frequency of each character in a given string.
+25. Implement the bubble sort algorithm.
+26. Implement the binary search algorithm.
+27. Check if two strings are anagrams of each other.
+28. Write a program to read from a file and write to a file.
+29. Create a simple banking system with basic operations like deposit and withdrawal.
+30. Print the current date and time using Java's date and time classes.

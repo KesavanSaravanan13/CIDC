@@ -1,0 +1,117 @@
+input[type="text"] {
+    background-color: #f5f6fa;
+    height: 45px;
+    border-radius: 25px;
+    width: 100%;
+    height: 64px;
+    border: none;
+}
+body{
+    background-color: #e4e7ed;
+}
+#headDiv{
+    background-color: #3c3c3b;
+    margin-top: 2px;
+}
+#alreadyAccount{
+    font-size: small;
+    font-weight: 500;
+}
+#signIn{
+    color: #6bc4df;
+    display: inline; 
+    width: auto; 
+    padding-left: 3px;
+}
+* {
+    font-family: "Poppins", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+}
+
+::placeholder {
+    padding-left: 20px;
+    font-size: larger;
+    color: #68707f;
+}
+
+label {
+    font-size: large;
+    font-weight: 300;
+    color: black;
+    margin-bottom: 10px;
+    
+}
+
+h6,
+p {
+    display: inline;
+}
+
+a {
+    text-decoration: none;
+}
+
+#accountDetail,
+#paymentDetail,
+#bankDetail {
+    background-color: white;
+    border-radius: 20px;
+    padding-left: 20px;
+    padding-right: 20px;
+    padding-bottom: 20px;
+    padding-top: 35px;
+    margin-bottom: 30px;
+}
+
+#continueButton {
+    background-color: #ec6611;
+    width: 200px;
+    height: 50px;
+    font-size: larger;
+    border-radius: 5px;
+    border: none;
+    color: white;
+}
+
+#orderSummary {
+    width: auto;
+    height: auto;
+    /* padding: 50px; */
+    border-radius: 20px;
+    background-color: white;
+}
+
+#formOne {
+    border-radius: 50px;
+    padding-top: 25px;
+    padding-left: 30px;
+    padding-right: 30px;
+    padding-bottom: 10px;
+
+}
+
+#firstRow {
+    margin: 30px;
+}
+
+
+input:focus {
+    outline: none;
+    padding: 30px;
+}
+#show{
+    text-decoration: underline;
+    color: gray; 
+    padding-top: 20px; 
+    padding-right: 30px; 
+    font-size: large; 
+    font-weight: 600;
+}
+@media screen and (max-width:768px){
+    #continueButton{
+        width: 120px;
+        height: 40px;
+    }
+}
+

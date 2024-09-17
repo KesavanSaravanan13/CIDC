@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Billing</title>
+    <link rel="stylesheet" href="/Daily Problems/Task/CSS/bootstrap.min.css">
+    <link rel="stylesheet" href="/Daily Problems/Task/CSS/billing_1.0.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <div class=" p-5" id="headDiv"></div>
+    <div id="firstRow" class="row">
+        <!--row for the three rows and order summary-->
+        <div class="col col-lg-8 col-xl-7 col-md-12" id="threeRow"> <!--Three rows-->
+            <div class="row" id="accountDetail"> <!--Account Details-->
+                <button class="btn row  pe-0" type="button" data-bs-toggle="collapse" data-bs-target="#formOne"
+                    aria-expanded="true" aria-controls="collapse">
+                    <div class="row d-flex pe-0 justify-content-start ">
+                        <h4 class="px-0 w-auto" style="color: #6bc4df; margin-right: 15px;"><b>1</b></h4>
+                        <h4 class="px-0 w-auto">Account details</h4>
+                    </div>
+                </button>
+                <div class="col collapse show pt-0 px-0 px-sm-1" id="formOne">
+                    <div class="row d-flex justify-content-end mx-1 d-none d-sm-flex" id="alreadyAccount">Already have
+                        an account?<a href="" id="signIn">Sign in here</a>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6 col mt-1">
+                            <label class="d-block" for="Email" class="row-form-label"><b>Email address
+                                    *</b></label>
+                            <input placeholder="Email address" type="text" id="Email" />
+                        </div>
+                        <div class="col-md-6 mt-1">
+                            <label class="d-block" for="Password" class="row-form-label"><b>Password *</b></label>
+                            <div class="d-flex justify-content-between"
+                                style="background-color: #f5f6fa; border: none; border-radius: 25px;">
+                                <input type="text" name="password" id="password" placeholder="Password"
+                                    style="border: none; box-shadow: none; width: 165px;">
+                                <a href="" id="show">show</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mt-4">
+                        <div class="col-md-6 mb-1 mt-1">
+                            <label class="d-block" for="fName" class="row-form-label"><b>First name *</b></label>
+                            <input placeholder="First name" type="text" id="fName" />
+                        </div>
+                        <div class="col-md-6 mb-1 mt-1">
+                            <label class="d-block" for="lName" class="row-form-label"><b>Last name *</b></label>
+                            <input placeholder="Last name" type="text" id="Password" />
+                        </div>
+                    </div>
+                    <div class="row mt-3 ">
+                        <div class="col-lg-9 col-md-12 mt-4 ps-3 " id="termsColumn">
+                            <h6 style="color: gray;">By creating an account, you agree to the
+                                <a href="" style="color: #6bc4df;">Terms And Conditions</a> set by this site, including
+                                our<a href="" style="color: #6bc4df;"> Cookie Use</a>
+                            </h6>
+                        </div>
+                        <div class="row d-flex justify-content-center mx-1 d-sm-none mt-3" id="alreadyAccount2">Already
+                            have an account?<a href="" id="signIn">Sign in here</a>
+                        </div>
+                        <div class="col-lg-3 col-md-12">
+                            <div class="d-flex justify-content-center  justify-content-md-end mt-4 pe-1">
+                                <button type="button" id="continueButton">Continue</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row" id="bankDetail"> <!--Bank Details-->
+                <button class="btn row  pe-0" type="button" data-bs-toggle="collapse" data-bs-target="#formOne"
+                    aria-expanded="true" aria-controls="collapse">
+                    <div class="row d-flex pe-0 justify-content-start ">
+                        <h4 class="px-0" style="color: #6bc4df; width:auto; margin-right: 15px;"><b>2</b></h4>
+                        <h4 class="px-0" style="width: auto;">Bank details</h4>
+                    </div>
+                </button>
+                <div class="collapse" id="formOne" style="height: 150px;">
+                </div>
+            </div>
+            <div class="row" id="paymentDetail"> <!--Payment-->
+                <button class="btn row  pe-0" type="button" data-bs-toggle="collapse" data-bs-target="#formOne"
+                    aria-expanded="true" aria-controls="collapse">
+                    <div class="row d-flex pe-0 justify-content-start ">
+                        <h4 class="px-0" style="color: #6bc4df; width:auto; margin-right: 15px;"><b>3</b></h4>
+                        <h4 class="px-0" style="width: auto;">Payment</h4>
+                    </div>
+                </button>
+                <div class="collapse" id="formOne" style="height: 150px;">
+                </div>
+            </div>
+        </div>
+        <div class="col col-lg-4 h-100 col-xl-3 p-0" id="order"> <!--Order summary-->
+            <div class="d-flex ">
+                <div class="col p-4 p-sm-4 p-xl-4 ms-lg-3 ms-md-0" id="orderSummary">
+                    <div class="row">
+                        <h4>Order summary</h4>
+                    </div>
+                    <div class="d-flex justify-content-between">
+                        <div class="mt-3 pe-4 ">
+                            <h5>Plan</h5>
+                            <p>Free Trail</p>
+                        </div>
+                        <div class="mt-3 ps-4">
+                            <h5>Price</h5>
+                            <p>₹0.00</p>
+                        </div>
+                    </div>
+                    <div class="row mt-5 mb-3 mx-2">
+                        <hr>
+                    </div>
+                    <div class="d-flex justify-content-between">
+                        <div class="mt-3 mb-3">
+                            <h5>Total due today</h5>
+                        </div>
+                        <div class="mt-3 mb-3 ms-3">
+                            <h5>₹0.00</h5>
+                        </div>
+                    </div>
+                    <div class="row pb-5">
+                        <div class="col mt-3">
+                            <h6>Pack Free trail</h6>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+<script src="/Daily Problems/Task/Js/bootstrap.bundle.js"></script>
+
+</html>
