@@ -1,0 +1,24 @@
+create database employeedb;
+use employeedb;
+create table employee (
+    empid int primary key,
+    Name varchar(50),
+    domain varchar(50)
+);
+select * from employee;
+insert into employee values (1,"Boopathi","Java"),(2,"Kesav","Java");
+-- truncate table employee;
+rename table employee to employeedetails;
+select * from employeedetails;
+savepoint A;
+alter table employeedetails add age int;
+start transaction;
+update employeedetails set age=10 where empid=1;
+update employeedetails set age=12 where empid=2;
+savepoint B;
+delete from employeedetails where empid=2;
+rollback to savepoint B;
+drop table employeedetails;
+commit;
+drop table employee;
+drop database employeedb;
