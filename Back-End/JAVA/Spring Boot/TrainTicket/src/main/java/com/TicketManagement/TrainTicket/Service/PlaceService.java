@@ -13,8 +13,8 @@ public class PlaceService {
     @Autowired
     private PlaceRepository placeRepository;
 
-    public PlaceDetails savePlace(PlaceDetails place) {
-        return placeRepository.save(place);
+    public void savePlace(PlaceDetails place) {
+         placeRepository.save(place);
     }
 
     public List<PlaceDetails> getAllPlaces() {

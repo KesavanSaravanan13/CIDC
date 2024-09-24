@@ -26,8 +26,20 @@ public class TicketService {
         ticketDetailsRepository.save(ticketDetails);
     }
 
-    public void updateTicket(TicketDetails ticketDetails) {
-        ticketDetailsRepository.save(ticketDetails);
+    public void updateTicket(int id, TicketDetails ticketDetails) {
+        ticketDetailsRepository.findById(id)
+                .map(ticketDetails1 -> {
+                    ticketDetails1.setUser(ticketDetails.getUser());
+                    ticketDetails1.setDateOfBooking(ticketDetails.getDateOfBooking());
+                    ticketDetails1.setPrebookFood(ticketDetails.getPrebookFood());
+                    ticketDetails1.setTravelFrom(ticketDetails.getTravelFrom());
+                    ticketDetails1.setTravelTo(ticketDetails.getTravelTo());
+                    ticketDetails1.setDateOfTravel(ticketDetails.getDateOfTravel());
+                    ticketDetails1.setTravelTiming(ticketDetails.getTravelTiming());
+                    ticketDetails1.setNoOfDaysTravel(ticketDetails.getNoOfDaysTravel());
+
+                    return ticketDetailsRepository.save(ticketDetails1);
+                });
     }
 
     public void deleteTicket(int ticketNum) {

@@ -37,8 +37,8 @@ public class TicketDetailsController {
     }
 
     @PutMapping("/{ticketNum}")
-    public void updateTicket(@RequestBody TicketDetails ticketDetails) {
-        ticketDetailsService.updateTicket(ticketDetails);
+    public void updateTicket(@PathVariable int ticketNum,@RequestBody TicketDetails ticketDetails) {
+        ticketDetailsService.updateTicket(ticketNum,ticketDetails);
     }
 
     @DeleteMapping("/{ticketNum}")

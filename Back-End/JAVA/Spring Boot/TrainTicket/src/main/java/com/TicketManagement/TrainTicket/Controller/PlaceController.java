@@ -14,8 +14,8 @@ public class PlaceController {
     private PlaceService placeService;
 
     @PostMapping("/place/create")
-    public PlaceDetails createPlace(@RequestBody PlaceDetails place) {
-        return placeService.savePlace(place);
+    public void createPlace(@RequestBody PlaceDetails place) {
+         placeService.savePlace(place);
     }
 
     @GetMapping("/place")

@@ -22,7 +22,7 @@ public class TrainStation implements Serializable {
         @Column(name = "station_name", nullable = false, unique = true)
         private String stationName;
 
-        @ManyToOne
-        @JoinColumn(name = "place_name", nullable = false)
+        @ManyToOne(cascade = CascadeType.ALL)
+        @JoinColumn(name = "place_name",nullable = false,referencedColumnName = "place_name")
         private PlaceDetails place;
 }

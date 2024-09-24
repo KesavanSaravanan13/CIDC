@@ -18,11 +18,6 @@ public class TrainStationController {
         return trainStationService.findAll();
     }
 
-    @PostMapping("/train-station/create")
-    public TrainStation addTrainStation(@RequestBody TrainStation trainStation) {
-        return trainStationService.save(trainStation);
-    }
-
     @GetMapping("/train-station/id/{id}")
     public TrainStation getTrainStationById(@PathVariable int id) {
         return trainStationService.findById(id);

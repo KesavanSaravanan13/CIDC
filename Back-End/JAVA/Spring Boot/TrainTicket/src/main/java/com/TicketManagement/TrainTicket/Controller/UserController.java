@@ -10,14 +10,15 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
+@RequestMapping
 public class UserController {
 
     @Autowired
     private UserService userService;
 
     @PostMapping("/user/create")
-    public UserDetails createUser(@RequestBody UserDetails user) {
-        return userService.saveUser(user);
+    public void createUser(@RequestBody UserDetails user) {
+         userService.saveUser(user);
     }
 
     @GetMapping("/user/id/{id}")
@@ -30,8 +31,4 @@ public class UserController {
         return userService.getAllUsers();
     }
 
-    @DeleteMapping("/user/delete/{id}")
-    public void deleteUser(@PathVariable int id) {
-        userService.deleteUser(id);
-    }
 }
