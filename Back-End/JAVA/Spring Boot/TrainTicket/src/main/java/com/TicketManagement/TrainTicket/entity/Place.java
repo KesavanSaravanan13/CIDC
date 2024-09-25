@@ -1,21 +1,20 @@
-package com.TicketManagement.TrainTicket.Table;
+package com.TicketManagement.TrainTicket.entity;
 
 
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
-import org.springframework.stereotype.Component;
-
-import java.util.List;
 
 @Entity
 @Table(name = "place")
-@Component
 @Getter
 @Setter
-public class PlaceDetails {
+public class Place {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long place_id;
+
     @Column(name = "place_name", nullable = false, length = 100)
     private String placeName;
 

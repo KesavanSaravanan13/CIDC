@@ -1,10 +1,8 @@
-package com.TicketManagement.TrainTicket.Table;
+package com.TicketManagement.TrainTicket.entity;
 
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
-import org.hibernate.type.descriptor.java.LocaleJavaType;
-import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -17,7 +15,10 @@ public class TicketDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer ticketNum;
+    private Long ticket_id;
+
+    @Column(name="ticket_num")
+    private Long ticketNumber;
 
     @Column(name = "date_of_booking")
     private LocalDate dateOfBooking;
@@ -40,9 +41,9 @@ public class TicketDetails {
     @Column(name = "prebook_food")
     private Boolean prebookFood;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "user_id", referencedColumnName = "user_id")
-    private UserDetails user;
+    private User user;
 
 
 }

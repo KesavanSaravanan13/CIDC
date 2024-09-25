@@ -1,23 +1,22 @@
-package com.TicketManagement.TrainTicket.Table;
+package com.TicketManagement.TrainTicket.entity;
 
 
 import jakarta.persistence.*;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.stereotype.Component;
 
 @Entity
+@Table(name = "user")
 @Component
-@Table(name="user")
 @Getter
 @Setter
-public class UserDetails {
+public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "user_id")
-    private int userId;
+    private Long userId;
 
     @Column(name = "name", nullable = false, length = 100)
     private String name;
