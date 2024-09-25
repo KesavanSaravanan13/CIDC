@@ -1,27 +1,28 @@
-package com.TicketManagement.TrainTicket.Service;
+package com.TicketManagement.TrainTicket.service;
 
-import com.TicketManagement.TrainTicket.Repository.PlaceRepository;
-import com.TicketManagement.TrainTicket.Table.PlaceDetails;
+import com.TicketManagement.TrainTicket.entity.Place;
+import com.TicketManagement.TrainTicket.repository.PlaceRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class PlaceService {
 
-    @Autowired
-    private PlaceRepository placeRepository;
+    private final PlaceRepository placeRepository;
 
-    public void savePlace(PlaceDetails place) {
+    public void savePlace(Place place) {
          placeRepository.save(place);
     }
 
-    public List<PlaceDetails> getAllPlaces() {
+    public List<Place> getAllPlaces() {
         return placeRepository.findAll();
     }
 
-    public PlaceDetails getPlaceByName(String placeName) {
+    public Place getPlaceByName(String placeName) {
         return placeRepository.findById(placeName).orElse(null);
     }
 

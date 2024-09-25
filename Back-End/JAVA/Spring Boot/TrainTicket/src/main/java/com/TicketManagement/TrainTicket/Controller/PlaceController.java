@@ -1,30 +1,32 @@
-package com.TicketManagement.TrainTicket.Controller;
+package com.TicketManagement.TrainTicket.controller;
 
-import com.TicketManagement.TrainTicket.Service.PlaceService;
-import com.TicketManagement.TrainTicket.Table.PlaceDetails;
+import com.TicketManagement.TrainTicket.entity.Place;
+import com.TicketManagement.TrainTicket.service.PlaceService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
+@RequestMapping("/place")
+@RequiredArgsConstructor
 public class PlaceController {
 
-    @Autowired
-    private PlaceService placeService;
+    private final PlaceService placeService;
 
-    @PostMapping("/place/create")
-    public void createPlace(@RequestBody PlaceDetails place) {
-         placeService.savePlace(place);
+    @PostMapping
+    public void createPlace(@RequestBody Place place) {
+        placeService.savePlace(place);
     }
 
-    @GetMapping("/place")
-    public List<PlaceDetails> getAllPlaces() {
+    @GetMapping
+    public List<Place> getAllPlaces() {
         return placeService.getAllPlaces();
     }
 
-    @GetMapping("/place/name/{placeName}")
-    public PlaceDetails getPlaceByName(@PathVariable String placeName) {
+    @GetMapping("/{placeName}")
+    public Place getPlaceByName(@PathVariable String placeName) {
         return placeService.getPlaceByName(placeName);
     }
 

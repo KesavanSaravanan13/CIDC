@@ -1,11 +1,10 @@
-package com.TicketManagement.TrainTicket.Controller;
+package com.TicketManagement.TrainTicket.controller;
 
-import com.TicketManagement.TrainTicket.Repository.UserRepository;
-import com.TicketManagement.TrainTicket.Service.TicketService;
-import com.TicketManagement.TrainTicket.Table.TicketDetails;
-import com.TicketManagement.TrainTicket.Table.UserDetails;
+import com.TicketManagement.TrainTicket.entity.TicketDetails;
+import com.TicketManagement.TrainTicket.repository.UserRepository;
+import com.TicketManagement.TrainTicket.service.TicketService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -13,10 +12,10 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/tickets")
+@RequiredArgsConstructor
 public class TicketDetailsController {
 
-    @Autowired
-    private TicketService ticketDetailsService;
+    private final TicketService ticketDetailsService;
 
     @Autowired
     private UserRepository userDetailsRepository;
@@ -37,8 +36,8 @@ public class TicketDetailsController {
     }
 
     @PutMapping("/{ticketNum}")
-    public void updateTicket(@PathVariable int ticketNum,@RequestBody TicketDetails ticketDetails) {
-        ticketDetailsService.updateTicket(ticketNum,ticketDetails);
+    public void updateTicket(@PathVariable int ticketNum, @RequestBody TicketDetails ticketDetails) {
+        ticketDetailsService.updateTicket(ticketNum, ticketDetails);
     }
 
     @DeleteMapping("/{ticketNum}")

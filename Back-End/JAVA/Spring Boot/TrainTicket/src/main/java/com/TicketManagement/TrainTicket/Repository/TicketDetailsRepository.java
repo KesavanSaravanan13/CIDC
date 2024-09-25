@@ -1,6 +1,6 @@
-package com.TicketManagement.TrainTicket.Repository;
+package com.TicketManagement.TrainTicket.repository;
 
-import com.TicketManagement.TrainTicket.Table.TicketDetails;
+import com.TicketManagement.TrainTicket.entity.TicketDetails;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

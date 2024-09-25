@@ -1,29 +1,31 @@
-package com.TicketManagement.TrainTicket.Controller;
+package com.TicketManagement.TrainTicket.controller;
 
-import com.TicketManagement.TrainTicket.Service.TrainStationService;
-import com.TicketManagement.TrainTicket.Table.TrainStation;
+import com.TicketManagement.TrainTicket.entity.TrainStation;
+import com.TicketManagement.TrainTicket.service.TrainStationService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
+@RequestMapping("/train-station")
+@RequiredArgsConstructor
 public class TrainStationController {
 
-    @Autowired
-    private TrainStationService trainStationService;
+    private final TrainStationService trainStationService;
 
-    @GetMapping("/train-station")
+    @GetMapping
     public List<TrainStation> getAllTrainStations() {
         return trainStationService.findAll();
     }
 
-    @GetMapping("/train-station/id/{id}")
+    @GetMapping("/{id}")
     public TrainStation getTrainStationById(@PathVariable int id) {
         return trainStationService.findById(id);
     }
 
-    @DeleteMapping("/train-station/delete/{id}")
+    @DeleteMapping("/{id}")
     public void deleteTrainStation(@PathVariable int id) {
         trainStationService.deleteById(id);
     }

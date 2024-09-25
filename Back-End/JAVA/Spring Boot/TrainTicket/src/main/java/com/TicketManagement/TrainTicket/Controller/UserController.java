@@ -1,8 +1,9 @@
-package com.TicketManagement.TrainTicket.Controller;
+package com.TicketManagement.TrainTicket.controller;
 
 
-import com.TicketManagement.TrainTicket.Service.UserService;
-import com.TicketManagement.TrainTicket.Table.UserDetails;
+import com.TicketManagement.TrainTicket.entity.User;
+import com.TicketManagement.TrainTicket.service.UserService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -10,25 +11,30 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping
+@RequestMapping("/user")
+@RequiredArgsConstructor
 public class UserController {
 
-    @Autowired
-    private UserService userService;
+    private final UserService userService;
 
-    @PostMapping("/user/create")
-    public void createUser(@RequestBody UserDetails user) {
-         userService.saveUser(user);
+    @PostMapping
+    public void createUser(@RequestBody User user) {
+        userService.saveUser(user);
     }
 
-    @GetMapping("/user/id/{id}")
-    public Optional<UserDetails> getUserById(@PathVariable int id) {
+    @GetMapping("/{id}")
+    public Optional<User> getUserById(@PathVariable int id) {
         return userService.getUserById(id);
     }
 
-    @GetMapping("/user")
-    public List<UserDetails> getAllUsers() {
+    @GetMapping
+    public List<User> getAllUsers() {
         return userService.getAllUsers();
+    }
+
+    @DeleteMapping("/{id}")
+    public void deleteUser(@PathVariable int id){
+        userService.deleteUser(id);
     }
 
 }

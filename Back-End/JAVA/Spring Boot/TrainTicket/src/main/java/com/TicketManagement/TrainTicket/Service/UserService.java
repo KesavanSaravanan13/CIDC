@@ -1,33 +1,33 @@
-package com.TicketManagement.TrainTicket.Service;
+package com.TicketManagement.TrainTicket.service;
 
-import com.TicketManagement.TrainTicket.Repository.UserRepository;
-import com.TicketManagement.TrainTicket.Table.UserDetails;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.TicketManagement.TrainTicket.dto.UserDTO;
+import com.TicketManagement.TrainTicket.entity.User;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 
 @Service
+@RequiredArgsConstructor
 public class UserService {
 
-    @Autowired
-    private UserRepository userRepository;
+    private final UserDTO userdto;
 
-    public void saveUser(UserDetails user) {
-         userRepository.save(user);
+    public void saveUser(User user) {
+        userdto.save(user);
     }
 
-    public Optional<UserDetails> getUserById(int id) {
-        return userRepository.findById(id);
+    public Optional<User> getUserById(int id) {
+        return userdto.findById(id);
     }
 
-    public List<UserDetails> getAllUsers() {
-        return userRepository.findAll();
+    public List<User> getAllUsers() {
+        return userdto.findAll();
     }
 
     public void deleteUser(int id) {
-        userRepository.deleteById(id);
+        userdto.deleteById(id);
     }
 }
 

@@ -1,18 +1,20 @@
-package com.TicketManagement.TrainTicket.Service;
+package com.TicketManagement.TrainTicket.service;
 
-import com.TicketManagement.TrainTicket.Repository.TicketDetailsRepository;
-import com.TicketManagement.TrainTicket.Table.TicketDetails;
+import com.TicketManagement.TrainTicket.entity.TicketDetails;
+import com.TicketManagement.TrainTicket.repository.TicketDetailsRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 
 @Service
+@RequiredArgsConstructor
 public class TicketService {
 
-    @Autowired
-    private TicketDetailsRepository ticketDetailsRepository;
+    private final TicketDetailsRepository ticketDetailsRepository;
 
     public List<TicketDetails> getAllTickets() {
         return ticketDetailsRepository.findAll();
