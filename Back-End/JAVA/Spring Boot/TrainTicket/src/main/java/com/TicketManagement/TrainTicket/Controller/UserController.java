@@ -3,8 +3,10 @@ package com.TicketManagement.TrainTicket.controller;
 
 import com.TicketManagement.TrainTicket.dto.UserDTO;
 import com.TicketManagement.TrainTicket.entity.User;
+import com.TicketManagement.TrainTicket.mapper.UserMapper;
 import com.TicketManagement.TrainTicket.service.UserService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -32,8 +34,8 @@ public class UserController {
     }
 
     @DeleteMapping("/{id}")
-    public void deleteUser(@PathVariable Long id){
-        userService.deleteUser(id);
+    public String deleteUser(@PathVariable Long id){
+        return userService.deleteUser(id);
     }
 
 }
