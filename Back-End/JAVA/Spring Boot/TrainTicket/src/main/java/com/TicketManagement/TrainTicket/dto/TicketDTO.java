@@ -1,5 +1,6 @@
 package com.TicketManagement.TrainTicket.dto;
 
+import com.TicketManagement.TrainTicket.entity.User;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -19,7 +20,22 @@ public class TicketDTO {
     private String travelTo;
     private Integer noOfDaysTravel;
     private Boolean prebookFood;
-    private Long userId;
+    private User user;
 
-
+    public TicketDTO(Long ticketId, Long ticketNumber,
+                     LocalDate dateOfBooking, LocalDate dateOfTravel,
+                     LocalTime travelTiming, String travelFrom,
+                     String travelTo, Integer noOfDaysTravel,
+                     Boolean prebookFood, User userId) {
+        this.ticketId = ticketId;
+        this.ticketNumber = ticketNumber;
+        this.dateOfBooking = dateOfBooking;
+        this.dateOfTravel = dateOfTravel;
+        this.travelTiming = travelTiming;
+        this.travelFrom = travelFrom;
+        this.travelTo = travelTo;
+        this.noOfDaysTravel = noOfDaysTravel;
+        this.prebookFood = prebookFood;
+        this.user = userId;
+    }
 }

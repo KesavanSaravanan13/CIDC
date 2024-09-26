@@ -3,6 +3,9 @@ package com.TicketManagement.TrainTicket.dto;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.stereotype.Component;
+
+import java.util.List;
 
 @Getter
 @Setter
@@ -18,5 +21,7 @@ public class UserDTO {
         this.name = name;
         this.address = address;
         this.phoneNumber = phoneNumber;
+
     }
+
 }
