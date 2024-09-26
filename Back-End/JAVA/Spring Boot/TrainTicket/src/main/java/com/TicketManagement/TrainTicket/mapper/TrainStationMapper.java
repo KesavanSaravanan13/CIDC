@@ -25,7 +25,6 @@ public class TrainStationMapper {
     private List<TrainStationDTO> trainStationList = new ArrayList<>();
 
     public void toDTO() {
-        trainStationList.clear();
         for (TrainStation trainStation : trainStationRepo.findAll()) {
             trainStationList.add(new TrainStationDTO(trainStation.getStationId(),trainStation.getStationName(),trainStation.getPlace()));
         }

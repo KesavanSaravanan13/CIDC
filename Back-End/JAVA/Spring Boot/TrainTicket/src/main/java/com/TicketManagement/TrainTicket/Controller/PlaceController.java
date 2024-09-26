@@ -1,5 +1,6 @@
 package com.TicketManagement.TrainTicket.controller;
 
+import com.TicketManagement.TrainTicket.dto.PlaceDTO;
 import com.TicketManagement.TrainTicket.entity.Place;
 import com.TicketManagement.TrainTicket.service.PlaceService;
 import lombok.RequiredArgsConstructor;
@@ -16,18 +17,23 @@ public class PlaceController {
     private final PlaceService placeService;
 
     @PostMapping
-    public void createPlace(@RequestBody Place place) {
+    public void createPlace(@RequestBody PlaceDTO place) {
         placeService.savePlace(place);
     }
 
     @GetMapping
-    public List<Place> getAllPlaces() {
+    public List<PlaceDTO> getAllPlaces() {
         return placeService.getAllPlaces();
     }
 
-    @GetMapping("/{placeName}")
-    public Place getPlaceByName(@PathVariable String placeName) {
-        return placeService.getPlaceByName(placeName);
+    @GetMapping("/{placeId}")
+    public PlaceDTO getPlaceByName(@PathVariable Long placeId) {
+        return placeService.getPlaceById(placeId);
+    }
+
+    @DeleteMapping("/{placeId}")
+    public void deletePlace(@PathVariable Long placeId) {
+         placeService.deletePlace(placeId);
     }
 
 }

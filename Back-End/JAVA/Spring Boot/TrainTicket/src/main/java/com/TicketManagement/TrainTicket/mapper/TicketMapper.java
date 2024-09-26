@@ -25,7 +25,6 @@ public class TicketMapper {
     private List<TicketDTO> ticketList = new ArrayList<>();
 
     public void toDTO() {
-        ticketList.clear();
         for (TicketDetails ticket : ticketRepo.findAll()) {
             ticketList.add(new TicketDTO(ticket.getTicket_id(),ticket.getTicketNumber(),
                     ticket.getDateOfBooking(),ticket.getDateOfTravel(),

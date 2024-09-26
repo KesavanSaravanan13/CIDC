@@ -1,6 +1,5 @@
 package com.TicketManagement.TrainTicket.mapper;
 
-import ch.qos.logback.core.CoreConstants;
 import com.TicketManagement.TrainTicket.dto.UserDTO;
 import com.TicketManagement.TrainTicket.entity.User;
 import com.TicketManagement.TrainTicket.repository.UserRepository;
@@ -19,22 +18,24 @@ import java.util.List;
 public class UserMapper {
 
     private final UserRepository userRepo;
-    private List<UserDTO> userList = new ArrayList<>();
+    private List<UserDTO> userList;
 
     public void toDTO() {
-        userList.clear();
+        userList = new ArrayList<>();
         for (User user : userRepo.findAll()) {
-            userList.add(new UserDTO(user.getUserId(), user.getName(), user.getAddress(), user.getPhoneNumber()));
+            if(user.getStatus() != null && user.getStatus().equalsIgnoreCase("Active")){
+                userList.add(new UserDTO(user.getUserId(), user.getName(), user.getAddress(), user.getPhoneNumber(),user.getStatus()));
+            }
         }
     }
 
-
-    public static User toEntity(UserDTO userDTO) {
+    public void toEntity(UserDTO userDTO) {
         User user = new User();
         user.setUserId(userDTO.getUserId());
         user.setName(userDTO.getName());
         user.setAddress(userDTO.getAddress());
         user.setPhoneNumber(userDTO.getPhoneNumber());
-        return user;
+        user.setStatus(userDTO.getStatus());
+        userRepo.save(user);
     }
 }

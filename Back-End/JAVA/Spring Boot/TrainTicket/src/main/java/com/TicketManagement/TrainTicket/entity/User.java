@@ -26,4 +26,7 @@ public class User {
 
     @Column(name = "ph_no", nullable = false, length = 15)
     private String phoneNumber;
+
+    @Column(name="status")
+    private String status;
 }

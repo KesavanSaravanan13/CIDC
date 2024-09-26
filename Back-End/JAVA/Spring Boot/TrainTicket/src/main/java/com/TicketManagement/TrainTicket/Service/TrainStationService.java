@@ -1,30 +1,43 @@
 package com.TicketManagement.TrainTicket.service;
 
-import com.TicketManagement.TrainTicket.repository.PlaceRepository;
-import com.TicketManagement.TrainTicket.repository.TrainStationRepository;
-import com.TicketManagement.TrainTicket.entity.TrainStation;
+import com.TicketManagement.TrainTicket.dto.TrainStationDTO;
+import com.TicketManagement.TrainTicket.mapper.TrainStationMapper;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
 @RequiredArgsConstructor
 public class TrainStationService {
 
-    private final TrainStationRepository trainStationRepository;
+    private final TrainStationMapper trainMapper;
+    private final List<TrainStationDTO> trainStationList = new ArrayList<>();
 
-    public List<TrainStation> findAll() {
-        return trainStationRepository.findAll();
+    public void saveTrainStation(TrainStationDTO trainStation) {
+        trainMapper.toDTO();
+        new TrainStationDTO(trainStation.getStationId(),trainStation.getStationName(),trainStation.getPlace());
     }
 
-    public TrainStation findById(int id) {
-        return trainStationRepository.findById(id).orElse(null);
+    public TrainStationDTO getTrainStationById(Long id) {
+        trainMapper.toDTO();
+        for (TrainStationDTO TrainStationDTO : trainMapper.getTrainStationList()) {
+            if (TrainStationDTO.getStationId().equals(id)) {
+                return TrainStationDTO;
+            }
+        }
+        return null;
     }
 
-    public void deleteById(int id) {
-        trainStationRepository.deleteById(id);
+    public List<TrainStationDTO> getAllTrainStations() {
+        trainMapper.toDTO();
+        return new ArrayList<>(trainMapper.getTrainStationList());
+    }
+
+    public void deleteTrainStation(Long stationId) {
+        trainMapper.toDTO();
+        trainMapper.getTrainStationList().removeIf(TrainStationDTO -> TrainStationDTO.getStationId().equals(stationId));
     }
 }
 

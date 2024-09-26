@@ -1,5 +1,6 @@
 package com.TicketManagement.TrainTicket.controller;
 
+import com.TicketManagement.TrainTicket.dto.TrainStationDTO;
 import com.TicketManagement.TrainTicket.entity.TrainStation;
 import com.TicketManagement.TrainTicket.service.TrainStationService;
 import lombok.RequiredArgsConstructor;
@@ -16,18 +17,18 @@ public class TrainStationController {
     private final TrainStationService trainStationService;
 
     @GetMapping
-    public List<TrainStation> getAllTrainStations() {
-        return trainStationService.findAll();
+    public List<TrainStationDTO> getAllTrainStations() {
+        return trainStationService.getAllTrainStations();
     }
 
     @GetMapping("/{id}")
-    public TrainStation getTrainStationById(@PathVariable int id) {
-        return trainStationService.findById(id);
+    public TrainStationDTO getTrainStationById(@PathVariable long id) {
+        return trainStationService.getTrainStationById(id);
     }
 
     @DeleteMapping("/{id}")
-    public void deleteTrainStation(@PathVariable int id) {
-        trainStationService.deleteById(id);
+    public void deleteTrainStation(@PathVariable long id) {
+        trainStationService.deleteTrainStation(id);
     }
 }
 

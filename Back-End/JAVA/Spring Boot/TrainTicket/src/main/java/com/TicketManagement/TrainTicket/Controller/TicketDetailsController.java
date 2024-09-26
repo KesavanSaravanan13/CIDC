@@ -1,6 +1,6 @@
 package com.TicketManagement.TrainTicket.controller;
 
-import com.TicketManagement.TrainTicket.entity.TicketDetails;
+import com.TicketManagement.TrainTicket.dto.TicketDTO;
 import com.TicketManagement.TrainTicket.repository.UserRepository;
 import com.TicketManagement.TrainTicket.service.TicketService;
 import lombok.RequiredArgsConstructor;
@@ -21,27 +21,27 @@ public class TicketDetailsController {
     private UserRepository userDetailsRepository;
 
     @GetMapping
-    public List<TicketDetails> getAllTickets() {
+    public List<TicketDTO> getAllTickets() {
         return ticketDetailsService.getAllTickets();
     }
 
     @GetMapping("/{ticketNum}")
-    public Optional<TicketDetails> getTicketById(@PathVariable int ticketNum) {
+    public TicketDTO getTicketById(@PathVariable Long ticketNum) {
         return ticketDetailsService.getTicketById(ticketNum);
     }
 
     @PostMapping
-    public void createTicket(@RequestBody TicketDetails ticketDetails) {
-        ticketDetailsService.saveTicket(ticketDetails);
+    public void createTicket(@RequestBody TicketDTO TicketDTO) {
+        ticketDetailsService.saveTicket(TicketDTO);
     }
 
-    @PutMapping("/{ticketNum}")
-    public void updateTicket(@PathVariable int ticketNum, @RequestBody TicketDetails ticketDetails) {
-        ticketDetailsService.updateTicket(ticketNum, ticketDetails);
-    }
+//    @PutMapping("/{ticketNum}")
+//    public void updateTicket(@PathVariable int ticketNum, @RequestBody TicketDTO TicketDTO) {
+//        ticketDetailsService.updateTicket(ticketNum, TicketDTO);
+//    }
 
     @DeleteMapping("/{ticketNum}")
-    public void deleteTicket(@PathVariable int ticketNum) {
+    public void deleteTicket(@PathVariable Long ticketNum) {
         ticketDetailsService.deleteTicket(ticketNum);
     }
 }

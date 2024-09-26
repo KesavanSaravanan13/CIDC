@@ -1,32 +1,42 @@
 package com.TicketManagement.TrainTicket.service;
 
-import com.TicketManagement.TrainTicket.entity.Place;
-import com.TicketManagement.TrainTicket.repository.PlaceRepository;
+import com.TicketManagement.TrainTicket.dto.PlaceDTO;
+import com.TicketManagement.TrainTicket.mapper.PlaceMapper;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
 @RequiredArgsConstructor
 public class PlaceService {
 
-    private final PlaceRepository placeRepository;
+    private final PlaceMapper placeMapper;
+    private final List<PlaceDTO> placeList = new ArrayList<>();
 
-    public void savePlace(Place place) {
-         placeRepository.save(place);
+    public void savePlace(PlaceDTO place) {
+        placeMapper.toDTO();
+        new PlaceDTO(place.getPlaceId(), place.getPlaceName(), place.getNoOfStations());
     }
 
-    public List<Place> getAllPlaces() {
-        return placeRepository.findAll();
+    public PlaceDTO getPlaceById(Long id) {
+        placeMapper.toDTO();
+        for (PlaceDTO placeDTO : placeMapper.getPlaceList()) {
+            if (placeDTO.getPlaceId().equals(id)) {
+                return placeDTO;
+            }
+        }
+        return null;
     }
 
-    public Place getPlaceByName(String placeName) {
-        return placeRepository.findById(placeName).orElse(null);
+    public List<PlaceDTO> getAllPlaces() {
+        placeMapper.toDTO();
+        return new ArrayList<>(placeMapper.getPlaceList());
     }
 
-    public void deletePlace(String placeName) {
-        placeRepository.deleteById(placeName);
+    public void deletePlace(Long placeId) {
+        placeMapper.toDTO();
+        placeMapper.getPlaceList().removeIf(placeDTO -> placeDTO.getPlaceId().equals(placeId));
     }
 }

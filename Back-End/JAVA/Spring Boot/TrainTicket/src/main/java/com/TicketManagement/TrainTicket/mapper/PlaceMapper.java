@@ -21,7 +21,6 @@ public class PlaceMapper {
     private List<PlaceDTO> placeList = new ArrayList<>();
 
     public void toDTO() {
-        placeList.clear();
         for (Place place : placeRepo.findAll()) {
             placeList.add(new PlaceDTO(place.getPlace_id(), place.getPlaceName(), place.getNoOfStations()));
         }
