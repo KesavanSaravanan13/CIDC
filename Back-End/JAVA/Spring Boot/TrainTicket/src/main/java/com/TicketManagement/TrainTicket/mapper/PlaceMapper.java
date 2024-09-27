@@ -22,15 +22,17 @@ public class PlaceMapper {
 
     public void toDTO() {
         for (Place place : placeRepo.findAll()) {
-            placeList.add(new PlaceDTO(place.getPlace_id(), place.getPlaceName(), place.getNoOfStations()));
+            if (place.getStatus() != null && place.getStatus().equalsIgnoreCase("Available")) {
+                placeList.add(new PlaceDTO(place.getPlace_id(), place.getPlaceName(), place.getNoOfStations(), place.getStatus()));
+            }
         }
     }
 
-    public static Place toEntity(PlaceDTO placeDTO) {
+    public void toEntity(PlaceDTO placeDTO) {
         Place place = new Place();
         place.setPlace_id(placeDTO.getPlaceId());
         place.setPlaceName(placeDTO.getPlaceName());
         place.setNoOfStations(placeDTO.getNoOfStations());
-        return place;
+        placeRepo.save(place);
     }
 }

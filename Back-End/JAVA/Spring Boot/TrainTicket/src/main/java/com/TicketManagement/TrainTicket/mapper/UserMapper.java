@@ -23,8 +23,8 @@ public class UserMapper {
     public void toDTO() {
         userList = new ArrayList<>();
         for (User user : userRepo.findAll()) {
-            if(user.getStatus() != null && user.getStatus().equalsIgnoreCase("Active")){
-                userList.add(new UserDTO(user.getUserId(), user.getName(), user.getAddress(), user.getPhoneNumber(),user.getStatus()));
+            if (user.getStatus() != null && user.getStatus().equalsIgnoreCase("Active")) {
+                userList.add(new UserDTO(user.getUserId(), user.getName(), user.getAddress(), user.getPhoneNumber(), user.getStatus()));
             }
         }
     }

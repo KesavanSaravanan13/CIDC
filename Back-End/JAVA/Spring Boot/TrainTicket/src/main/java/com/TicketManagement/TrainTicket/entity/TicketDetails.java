@@ -17,7 +17,7 @@ public class TicketDetails {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long ticket_id;
 
-    @Column(name="ticket_num")
+    @Column(name = "ticket_num")
     private Long ticketNumber;
 
     @Column(name = "date_of_booking")
@@ -44,6 +44,9 @@ public class TicketDetails {
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "user_id", referencedColumnName = "user_id")
     private User user;
+
+    @Column(name = "status")
+    private String status;
 
 
 }

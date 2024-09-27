@@ -4,11 +4,9 @@ package com.TicketManagement.TrainTicket.entity;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
-import org.springframework.stereotype.Component;
 
 @Entity
 @Table(name = "user")
-@Component
 @Getter
 @Setter
 public class User {
@@ -27,6 +25,6 @@ public class User {
     @Column(name = "ph_no", nullable = false, length = 15)
     private String phoneNumber;
 
-    @Column(name="status")
+    @Column(name = "status")
     private String status;
 }

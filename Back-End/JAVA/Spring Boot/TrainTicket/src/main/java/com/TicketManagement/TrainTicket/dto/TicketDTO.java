@@ -21,12 +21,13 @@ public class TicketDTO {
     private Integer noOfDaysTravel;
     private Boolean prebookFood;
     private User user;
+    private String status;
 
     public TicketDTO(Long ticketId, Long ticketNumber,
                      LocalDate dateOfBooking, LocalDate dateOfTravel,
                      LocalTime travelTiming, String travelFrom,
                      String travelTo, Integer noOfDaysTravel,
-                     Boolean prebookFood, User userId) {
+                     Boolean prebookFood, User userId, String status) {
         this.ticketId = ticketId;
         this.ticketNumber = ticketNumber;
         this.dateOfBooking = dateOfBooking;
@@ -37,5 +38,6 @@ public class TicketDTO {
         this.noOfDaysTravel = noOfDaysTravel;
         this.prebookFood = prebookFood;
         this.user = userId;
+        this.status = status;
     }
 }

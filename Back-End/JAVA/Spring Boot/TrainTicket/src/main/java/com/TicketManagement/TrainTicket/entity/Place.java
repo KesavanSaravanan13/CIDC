@@ -21,4 +21,7 @@ public class Place {
     @Column(name = "no_of_stations", nullable = false)
     private int noOfStations;
 
+    @Column(name = "status", nullable = false)
+    private String status;
+
 }

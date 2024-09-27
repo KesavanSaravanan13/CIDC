@@ -20,4 +20,7 @@ public class TrainStation {
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "place_id", referencedColumnName = "place_id")
     private Place place;
+
+    @Column(name = "status")
+    private String status;
 }
