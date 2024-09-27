@@ -1,7 +1,8 @@
 package com.TicketManagement.TrainTicket.service;
 
 import com.TicketManagement.TrainTicket.dto.UserDTO;
-import com.TicketManagement.TrainTicket.mapper.UserMapper;
+import com.TicketManagement.TrainTicket.entity.User;
+import com.TicketManagement.TrainTicket.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -12,17 +13,37 @@ import java.util.List;
 @RequiredArgsConstructor
 public class UserService {
 
-    private final UserMapper userMapper;
+    private final UserRepository userRepo;
+    private List<UserDTO> userList;
+
+    public void toDTO() {
+        userList = new ArrayList<>();
+        for (User user : userRepo.findAll()) {
+            if (user.getStatus() != null && user.getStatus().equalsIgnoreCase("Active")) {
+                userList.add(new UserDTO(user.getUserId(), user.getName(), user.getAddress(), user.getPhoneNumber(), user.getStatus()));
+            }
+        }
+    }
+
+    public void toEntity(UserDTO userDTO) {
+        User user = new User();
+        user.setUserId(userDTO.getUserId());
+        user.setName(userDTO.getName());
+        user.setAddress(userDTO.getAddress());
+        user.setPhoneNumber(userDTO.getPhoneNumber());
+        user.setStatus(userDTO.getStatus());
+        userRepo.save(user);
+    }
 
 
     public void saveUser(UserDTO user) {
-        userMapper.toDTO();
+        toDTO();
         new UserDTO(user.getUserId(), user.getName(), user.getAddress(), user.getPhoneNumber(), user.getStatus());
     }
 
     public UserDTO getUserById(Long id) {
-        userMapper.toDTO();
-        for (UserDTO userDTO : userMapper.getUserList()) {
+        toDTO();
+        for (UserDTO userDTO : userList) {
             if (userDTO.getUserId().equals(id)) {
                 return userDTO;
             }
@@ -31,17 +52,17 @@ public class UserService {
     }
 
     public List<UserDTO> getAllUsers() {
-        userMapper.toDTO();
-        return new ArrayList<>(userMapper.getUserList());
+        toDTO();
+        return new ArrayList<>(userList);
     }
 
     public String deleteUser(Long userId) {
         final String[] str = {""};
-        userMapper.toDTO();
-        userMapper.getUserList().forEach(user -> {
+        toDTO();
+        userList.forEach(user -> {
             if (user.getUserId().equals(userId)) {
                 user.setStatus("De-Active");
-                userMapper.toEntity(user);
+                toEntity(user);
                 str[0] = "Deleted";
             } else {
                 str[0] = "No Id Matched";

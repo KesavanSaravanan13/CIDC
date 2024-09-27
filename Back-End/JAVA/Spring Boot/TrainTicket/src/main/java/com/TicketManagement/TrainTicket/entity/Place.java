@@ -13,7 +13,8 @@ public class Place {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long place_id;
+    @Column(name = "place_id")
+    private Long placeId;
 
     @Column(name = "place_name", nullable = false, length = 100)
     private String placeName;

@@ -24,6 +24,11 @@ public class TrainStationController {
         return trainStationService.getTrainStationById(id);
     }
 
+    @PostMapping
+    public void getTrainStationById(@RequestBody TrainStationDTO train) {
+        trainStationService.saveTrainStation(train);
+    }
+
     @DeleteMapping("/{id}")
     public String deleteTrainStation(@PathVariable long id) {
         return trainStationService.deleteTrainStation(id);

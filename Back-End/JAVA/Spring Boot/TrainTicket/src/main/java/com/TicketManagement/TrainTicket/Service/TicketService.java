@@ -1,7 +1,9 @@
 package com.TicketManagement.TrainTicket.service;
 
 import com.TicketManagement.TrainTicket.dto.TicketDTO;
-import com.TicketManagement.TrainTicket.mapper.TicketMapper;
+import com.TicketManagement.TrainTicket.entity.TicketDetails;
+import com.TicketManagement.TrainTicket.entity.User;
+import com.TicketManagement.TrainTicket.repository.TicketDetailsRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -11,12 +13,43 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 public class TicketService {
+    private final TicketDetailsRepository ticketRepo;
+    private List<TicketDTO> ticketList;
 
-    private final TicketMapper ticketMapper;
-    private final List<TicketDTO> ticketList = new ArrayList<>();
+    public void toDTO() {
+        ticketList = new ArrayList<>();
+        for (TicketDetails ticket : ticketRepo.findAll()) {
+            if (ticket.getStatus() != null && ticket.getStatus().equalsIgnoreCase("Reserved")) {
+                ticketList.add(new TicketDTO(ticket.getTicketId(), ticket.getTicketNumber(),
+                        ticket.getDateOfBooking(), ticket.getDateOfTravel(),
+                        ticket.getTravelTiming(), ticket.getTravelFrom(),
+                        ticket.getTravelTo(), ticket.getNoOfDaysTravel(),
+                        ticket.getPrebookFood(), ticket.getUser(), ticket.getStatus()));
+            }
+        }
+    }
 
-    public void saveTicket(TicketDTO ticket) {
-        ticketMapper.toDTO();
+    public void toEntity(final TicketDTO ticketDetailsDTO) {
+        TicketDetails ticketDetails = new TicketDetails();
+        ticketDetails.setTicketId(ticketDetailsDTO.getTicketId());
+        ticketDetails.setTicketNumber(ticketDetailsDTO.getTicketNumber());
+        ticketDetails.setDateOfBooking(ticketDetailsDTO.getDateOfBooking());
+        ticketDetails.setDateOfTravel(ticketDetailsDTO.getDateOfTravel());
+        ticketDetails.setTravelTiming(ticketDetailsDTO.getTravelTiming());
+        ticketDetails.setTravelFrom(ticketDetailsDTO.getTravelFrom());
+        ticketDetails.setTravelTo(ticketDetailsDTO.getTravelTo());
+        ticketDetails.setNoOfDaysTravel(ticketDetailsDTO.getNoOfDaysTravel());
+        ticketDetails.setPrebookFood(ticketDetailsDTO.getPrebookFood());
+
+        User user = new User();
+        user.setUserId(ticketDetailsDTO.getUser().getUserId());
+        ticketDetails.setUser(user);
+
+        ticketRepo.save(ticketDetails);
+    }
+
+    public void saveTicket(final TicketDTO ticket) {
+        toDTO();
         new TicketDTO(ticket.getTicketId(), ticket.getTicketNumber(),
                 ticket.getDateOfBooking(), ticket.getDateOfTravel(),
                 ticket.getTravelTiming(), ticket.getTravelFrom(),
@@ -24,9 +57,9 @@ public class TicketService {
                 ticket.getPrebookFood(), ticket.getUser(), ticket.getStatus());
     }
 
-    public TicketDTO getTicketById(Long id) {
-        ticketMapper.toDTO();
-        for (TicketDTO TicketDTO : ticketMapper.getTicketList()) {
+    public TicketDTO getTicketById(final Long id) {
+        toDTO();
+        for (TicketDTO TicketDTO : ticketList) {
             if (TicketDTO.getTicketId().equals(id)) {
                 return TicketDTO;
             }
@@ -35,17 +68,17 @@ public class TicketService {
     }
 
     public List<TicketDTO> getAllTickets() {
-        ticketMapper.toDTO();
-        return new ArrayList<>(ticketMapper.getTicketList());
+        toDTO();
+        return new ArrayList<>(ticketList);
     }
 
-    public String deleteTicket(Long ticketId) {
+    public String deleteTicket(final Long ticketId) {
         final String[] str = {""};
-        ticketMapper.toDTO();
-        ticketMapper.getTicketList().forEach(user -> {
+        toDTO();
+        ticketList.forEach(user -> {
             if (user.getTicketId().equals(ticketId)) {
                 user.setStatus("De-Active");
-                ticketMapper.toEntity(user);
+                toEntity(user);
                 str[0] = "Deleted";
             } else {
                 str[0] = "No Id Matched";

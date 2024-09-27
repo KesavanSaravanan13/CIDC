@@ -15,7 +15,8 @@ public class TicketDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long ticket_id;
+    @Column(name = "ticket_id")
+    private Long ticketId;
 
     @Column(name = "ticket_num")
     private Long ticketNumber;
