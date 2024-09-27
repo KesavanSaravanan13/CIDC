@@ -17,11 +17,11 @@ public class TicketService {
 
     public void saveTicket(TicketDTO ticket) {
         ticketMapper.toDTO();
-        new TicketDTO(ticket.getTicketId(),ticket.getTicketNumber(),
-                ticket.getDateOfBooking(),ticket.getDateOfTravel(),
-                ticket.getTravelTiming(),ticket.getTravelFrom(),
-                ticket.getTravelTo(),ticket.getNoOfDaysTravel(),
-                ticket.getPrebookFood(),ticket.getUser());
+        new TicketDTO(ticket.getTicketId(), ticket.getTicketNumber(),
+                ticket.getDateOfBooking(), ticket.getDateOfTravel(),
+                ticket.getTravelTiming(), ticket.getTravelFrom(),
+                ticket.getTravelTo(), ticket.getNoOfDaysTravel(),
+                ticket.getPrebookFood(), ticket.getUser(), ticket.getStatus());
     }
 
     public TicketDTO getTicketById(Long id) {
@@ -39,9 +39,19 @@ public class TicketService {
         return new ArrayList<>(ticketMapper.getTicketList());
     }
 
-    public void deleteTicket(Long placeId) {
+    public String deleteTicket(Long ticketId) {
+        final String[] str = {""};
         ticketMapper.toDTO();
-        ticketMapper.getTicketList().removeIf(TicketDTO -> TicketDTO.getTicketId().equals(placeId));
+        ticketMapper.getTicketList().forEach(user -> {
+            if (user.getTicketId().equals(ticketId)) {
+                user.setStatus("De-Active");
+                ticketMapper.toEntity(user);
+                str[0] = "Deleted";
+            } else {
+                str[0] = "No Id Matched";
+            }
+        });
+        return str[0];
     }
 }
 

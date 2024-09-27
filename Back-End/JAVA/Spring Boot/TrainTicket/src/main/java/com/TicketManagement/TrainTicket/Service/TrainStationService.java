@@ -17,7 +17,7 @@ public class TrainStationService {
 
     public void saveTrainStation(TrainStationDTO trainStation) {
         trainMapper.toDTO();
-        new TrainStationDTO(trainStation.getStationId(),trainStation.getStationName(),trainStation.getPlace());
+        new TrainStationDTO(trainStation.getStationId(), trainStation.getStationName(), trainStation.getPlace(), trainStation.getStatus());
     }
 
     public TrainStationDTO getTrainStationById(Long id) {
@@ -35,9 +35,19 @@ public class TrainStationService {
         return new ArrayList<>(trainMapper.getTrainStationList());
     }
 
-    public void deleteTrainStation(Long stationId) {
+    public String deleteTrainStation(Long stationId) {
+        final String[] str = {""};
         trainMapper.toDTO();
-        trainMapper.getTrainStationList().removeIf(TrainStationDTO -> TrainStationDTO.getStationId().equals(stationId));
+        trainMapper.getTrainStationList().forEach(user -> {
+            if (user.getStationId().equals(stationId)) {
+                user.setStatus("Not-Available");
+                trainMapper.toEntity(user);
+                str[0] = "Deleted";
+            } else {
+                str[0] = "No Id Matched";
+            }
+        });
+        return str[0];
     }
 }
 

@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/tickets")
@@ -41,8 +40,8 @@ public class TicketDetailsController {
 //    }
 
     @DeleteMapping("/{ticketNum}")
-    public void deleteTicket(@PathVariable Long ticketNum) {
-        ticketDetailsService.deleteTicket(ticketNum);
+    public String deleteTicket(@PathVariable Long ticketNum) {
+        return ticketDetailsService.deleteTicket(ticketNum);
     }
 }
 

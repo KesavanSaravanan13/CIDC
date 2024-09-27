@@ -1,10 +1,8 @@
 package com.TicketManagement.TrainTicket.controller;
 
 import com.TicketManagement.TrainTicket.dto.PlaceDTO;
-import com.TicketManagement.TrainTicket.entity.Place;
 import com.TicketManagement.TrainTicket.service.PlaceService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -32,8 +30,8 @@ public class PlaceController {
     }
 
     @DeleteMapping("/{placeId}")
-    public void deletePlace(@PathVariable Long placeId) {
-         placeService.deletePlace(placeId);
+    public String deletePlace(@PathVariable Long placeId) {
+        return placeService.deletePlace(placeId);
     }
 
 }

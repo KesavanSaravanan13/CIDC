@@ -17,7 +17,7 @@ public class PlaceService {
 
     public void savePlace(PlaceDTO place) {
         placeMapper.toDTO();
-        new PlaceDTO(place.getPlaceId(), place.getPlaceName(), place.getNoOfStations());
+        new PlaceDTO(place.getPlaceId(), place.getPlaceName(), place.getNoOfStations(), place.getStatus());
     }
 
     public PlaceDTO getPlaceById(Long id) {
@@ -35,8 +35,18 @@ public class PlaceService {
         return new ArrayList<>(placeMapper.getPlaceList());
     }
 
-    public void deletePlace(Long placeId) {
+    public String deletePlace(Long placeId) {
+        final String[] str = {""};
         placeMapper.toDTO();
-        placeMapper.getPlaceList().removeIf(placeDTO -> placeDTO.getPlaceId().equals(placeId));
+        placeMapper.getPlaceList().forEach(user -> {
+            if (user.getPlaceId().equals(placeId)) {
+                user.setStatus("Not-Available");
+                placeMapper.toEntity(user);
+                str[0] = "Deleted";
+            } else {
+                str[0] = "No Id Matched";
+            }
+        });
+        return str[0];
     }
 }
