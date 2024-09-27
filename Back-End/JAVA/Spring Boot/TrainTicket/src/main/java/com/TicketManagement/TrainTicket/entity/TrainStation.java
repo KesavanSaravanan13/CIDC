@@ -12,6 +12,7 @@ public class TrainStation {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "station_id")
     private Long stationId;
 
     @Column(name = "station_name", nullable = false, unique = true)
