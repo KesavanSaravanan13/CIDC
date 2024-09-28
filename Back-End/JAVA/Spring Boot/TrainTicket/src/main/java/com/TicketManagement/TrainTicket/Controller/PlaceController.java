@@ -15,23 +15,23 @@ public class PlaceController {
     private final PlaceService placeService;
 
     @PostMapping
-    public void createPlace(@RequestBody PlaceDTO place) {
-        placeService.savePlace(place);
+    public void createPlace(@RequestBody final PlaceDTO place) {
+        this.placeService.savePlace(place);
     }
 
     @GetMapping
     public List<PlaceDTO> getAllPlaces() {
-        return placeService.getAllPlaces();
+        return this.placeService.getAllPlaces();
     }
 
     @GetMapping("/{placeId}")
-    public PlaceDTO getPlaceByName(@PathVariable Long placeId) {
-        return placeService.getPlaceById(placeId);
+    public PlaceDTO getPlaceByName(@PathVariable final Long placeId) {
+        return this.placeService.getPlaceById(placeId);
     }
 
     @DeleteMapping("/{placeId}")
-    public String deletePlace(@PathVariable Long placeId) {
-        return placeService.deletePlace(placeId);
+    public String deletePlace(@PathVariable final Long placeId) {
+        return this.placeService.deletePlace(placeId);
     }
 
 }

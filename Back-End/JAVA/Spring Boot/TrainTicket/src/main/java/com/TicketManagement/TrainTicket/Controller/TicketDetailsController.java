@@ -16,22 +16,22 @@ public class TicketDetailsController {
 
     @GetMapping
     public List<TicketDTO> getAllTickets() {
-        return ticketDetailsService.getAllTickets();
+        return this.ticketDetailsService.getAllTickets();
     }
 
     @GetMapping("/{ticketNum}")
-    public TicketDTO getTicketById(@PathVariable Long ticketNum) {
-        return ticketDetailsService.getTicketById(ticketNum);
+    public TicketDTO getTicketById(@PathVariable final Long ticketNum) {
+        return this.ticketDetailsService.getTicketById(ticketNum);
     }
 
     @PostMapping
-    public void createTicket(@RequestBody TicketDTO TicketDTO) {
-        ticketDetailsService.saveTicket(TicketDTO);
+    public void createTicket(@RequestBody final TicketDTO TicketDTO) {
+        this.ticketDetailsService.saveTicket(TicketDTO);
     }
 
     @DeleteMapping("/{ticketNum}")
-    public String deleteTicket(@PathVariable Long ticketNum) {
-        return ticketDetailsService.deleteTicket(ticketNum);
+    public String deleteTicket(@PathVariable final Long ticketNum) {
+        return this.ticketDetailsService.deleteTicket(ticketNum);
     }
 }
 

@@ -14,35 +14,30 @@ import java.util.List;
 public class UserService {
 
     private final UserRepository userRepo;
-    private List<UserDTO> userList;
 
-    public void toDTO() {
-        userList = new ArrayList<>();
-        for (User user : userRepo.findAll()) {
-            if (user.getStatus() != null && user.getStatus().equalsIgnoreCase("Active")) {
+    public List<UserDTO> getUserDetails() {
+        List<UserDTO> userList = new ArrayList<>();
+        for (User user : this.userRepo.findAll()) {
+            if (user.getStatus()) {
                 userList.add(new UserDTO(user.getUserId(), user.getName(), user.getAddress(), user.getPhoneNumber(), user.getStatus()));
             }
         }
+        return userList;
     }
 
-    public void toEntity(UserDTO userDTO) {
+    public void saveUser(final UserDTO userDTO) {
+        getUserDetails();
         User user = new User();
         user.setUserId(userDTO.getUserId());
         user.setName(userDTO.getName());
         user.setAddress(userDTO.getAddress());
         user.setPhoneNumber(userDTO.getPhoneNumber());
         user.setStatus(userDTO.getStatus());
-        userRepo.save(user);
+        this.userRepo.save(user);
     }
 
-    public void saveUser(UserDTO user) {
-        toDTO();
-        toEntity(new UserDTO(user.getUserId(), user.getName(), user.getAddress(), user.getPhoneNumber(), user.getStatus()));
-    }
-
-    public UserDTO getUserById(Long id) {
-        toDTO();
-        for (UserDTO userDTO : userList) {
+    public UserDTO getUserById(final Long id) {
+        for (UserDTO userDTO : getUserDetails()) {
             if (userDTO.getUserId().equals(id)) {
                 return userDTO;
             }
@@ -51,20 +46,17 @@ public class UserService {
     }
 
     public List<UserDTO> getAllUsers() {
-        toDTO();
-        return new ArrayList<>(userList);
+        return new ArrayList<>(getUserDetails());
     }
 
     public String deleteUser(Long userId) {
         final String[] str = {""};
-        toDTO();
-        userList.forEach(user -> {
+        str[0]="No Id Matched";
+        getUserDetails().forEach(user -> {
             if (user.getUserId().equals(userId)) {
-                user.setStatus("De-Active");
-                toEntity(user);
+                user.setStatus(false);
+                saveUser(user);
                 str[0] = "Deleted";
-            } else {
-                str[0] = "No Id Matched";
             }
         });
         return str[0];

@@ -14,39 +14,29 @@ import java.util.List;
 public class PlaceService {
 
     private final PlaceRepository placeRepo;
-    private List<PlaceDTO> placeList;
 
-    public void toDTO() {
-        placeList = new ArrayList<>();
-        for (Place place : placeRepo.findAll()) {
-            if (place.getStatus() != null && place.getStatus().equalsIgnoreCase("Available")) {
+    public List<PlaceDTO> getPlaceDetails() {
+        List<PlaceDTO> placeList = new ArrayList<>();
+        for (Place place : this.placeRepo.findAll()) {
+            if (place.getStatus()) {
                 placeList.add(new PlaceDTO(place.getPlaceId(), place.getPlaceName(), place.getNoOfStations(), place.getStatus()));
             }
         }
-    }
-
-    public void toEntity(final PlaceDTO placeDTO) {
-        Place place = new Place();
-        place.setPlaceId(placeDTO.getPlaceId());
-        place.setPlaceName(placeDTO.getPlaceName());
-        place.setNoOfStations(placeDTO.getNoOfStations());
-        place.setStatus(placeDTO.getStatus());
-        placeRepo.save(place);
+        return placeList;
     }
 
     public void savePlace(final PlaceDTO place) {
-        toDTO();
+        getPlaceDetails();
         Place placeObj = new Place();
         placeObj.setPlaceId(place.getPlaceId());
         placeObj.setPlaceName(place.getPlaceName());
         placeObj.setNoOfStations(place.getNoOfStations());
         placeObj.setStatus(place.getStatus());
-        placeRepo.save(placeObj);
+        this.placeRepo.save(placeObj);
     }
 
-    public PlaceDTO getPlaceById(Long id) {
-        toDTO();
-        for (PlaceDTO placeDTO : placeList) {
+    public PlaceDTO getPlaceById(final Long id) {
+        for (PlaceDTO placeDTO : getPlaceDetails()) {
             if (placeDTO.getPlaceId().equals(id)) {
                 return placeDTO;
             }
@@ -55,20 +45,17 @@ public class PlaceService {
     }
 
     public List<PlaceDTO> getAllPlaces() {
-        toDTO();
-        return new ArrayList<>(placeList);
+        return new ArrayList<>(getPlaceDetails());
     }
 
     public String deletePlace(final Long placeId) {
         final String[] str = {""};
-        toDTO();
-        placeList.forEach(user -> {
+        str[0] = "No Id Matched";
+        getPlaceDetails().forEach(user -> {
             if (user.getPlaceId().equals(placeId)) {
-                user.setStatus("Not-Available");
-                toEntity(user);
+                user.setStatus(false);
+                savePlace(user);
                 str[0] = "Deleted";
-            } else {
-                str[0] = "No Id Matched";
             }
         });
         return str[0];

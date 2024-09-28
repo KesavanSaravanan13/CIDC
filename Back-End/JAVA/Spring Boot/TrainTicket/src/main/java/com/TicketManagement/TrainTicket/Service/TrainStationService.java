@@ -17,42 +17,31 @@ public class TrainStationService {
 
     private final PlaceRepository PlaceRepo;
     private final TrainStationRepository trainStationRepo;
-    private List<TrainStationDTO> trainStationList;
 
-    public void toDTO() {
-        trainStationList = new ArrayList<>();
-        for (TrainStation trainStation : trainStationRepo.findAll()) {
-            if (trainStation.getStatus() != null && trainStation.getStatus().equalsIgnoreCase("Available")) {
+    public List<TrainStationDTO> getTrainDetails() {
+        List<TrainStationDTO> trainStationList = new ArrayList<>();
+        for (TrainStation trainStation : this.trainStationRepo.findAll()) {
+            if (trainStation.getStatus()) {
                 trainStationList.add(new TrainStationDTO(trainStation.getStationId(), trainStation.getStationName(), trainStation.getPlace(), trainStation.getStatus()));
             }
         }
-    }
-
-    public void toEntity(final TrainStationDTO trainStationDTO) {
-        TrainStation trainStation = new TrainStation();
-        trainStation.setStationId(trainStationDTO.getStationId());
-        trainStation.setStationName(trainStationDTO.getStationName());
-
-        Place place = new Place();
-        place.setPlaceId(trainStationDTO.getPlace().getPlaceId());
-        trainStation.setPlace(place);
-        trainStationRepo.save(trainStation);
+        return trainStationList;
     }
 
     public void saveTrainStation(final TrainStationDTO trainStationDTO) {
+        getTrainDetails();
         TrainStation trainStation = new TrainStation();
         trainStation.setStationId(trainStationDTO.getStationId());
         trainStation.setStationName(trainStationDTO.getStationName());
         trainStation.setStatus(trainStationDTO.getStatus());
-        trainStation.setPlace(PlaceRepo.findById(trainStationDTO.getPlace().getPlaceId()).orElseThrow(() ->
+        trainStation.setPlace(this.PlaceRepo.findById(trainStationDTO.getPlace().getPlaceId()).orElseThrow(() ->
             new RuntimeException("No Place Found")
         ));
-        trainStationRepo.save(trainStation);
+        this.trainStationRepo.save(trainStation);
     }
 
     public TrainStationDTO getTrainStationById(final Long id) {
-        toDTO();
-        for (TrainStationDTO TrainStationDTO : trainStationList) {
+        for (TrainStationDTO TrainStationDTO : getTrainDetails()) {
             if (TrainStationDTO.getStationId().equals(id)) {
                 return TrainStationDTO;
             }
@@ -61,20 +50,17 @@ public class TrainStationService {
     }
 
     public List<TrainStationDTO> getAllTrainStations() {
-        toDTO();
-        return new ArrayList<>(trainStationList);
+        return new ArrayList<>(getTrainDetails());
     }
 
     public String deleteTrainStation(final Long stationId) {
         final String[] str = {""};
-        toDTO();
-        trainStationList.forEach(user -> {
+        str[0] = "No Id Matched";
+        getTrainDetails().forEach(user -> {
             if (user.getStationId().equals(stationId)) {
-                user.setStatus("Not-Available");
-                toEntity(user);
+                user.setStatus(false);
+                saveTrainStation(user);
                 str[0] = "Deleted";
-            } else {
-                str[0] = "No Id Matched";
             }
         });
         return str[0];

@@ -17,12 +17,11 @@ public class TicketService {
 
     private final UserRepository userRepository;
     private final TicketDetailsRepository ticketRepo;
-    private List<TicketDTO> ticketList;
 
-    public void toDTO() {
-        ticketList = new ArrayList<>();
-        for (TicketDetails ticket : ticketRepo.findAll()) {
-            if (ticket.getStatus() != null && ticket.getStatus().equalsIgnoreCase("Reserved")) {
+    public List<TicketDTO> getTicketDetails() {
+        List<TicketDTO> ticketList = new ArrayList<>();
+        for (TicketDetails ticket : this.ticketRepo.findAll()) {
+            if (ticket.getStatus()) {
                 TicketDTO ticketObj = new TicketDTO();
                 ticketObj.setTicketId(ticket.getTicketId());
                 ticketObj.setTicketNumber(ticket.getTicketNumber());
@@ -38,9 +37,12 @@ public class TicketService {
                 ticketList.add(ticketObj);
             }
         }
+
+        return ticketList;
     }
 
-    public void toEntity(final TicketDTO ticket) {
+    public void saveTicket(final TicketDTO ticket) {
+        getTicketDetails();
         TicketDetails ticketDetails = new TicketDetails();
         ticketDetails.setTicketId(ticket.getTicketId());
         ticketDetails.setTicketNumber(ticket.getTicketNumber());
@@ -52,30 +54,13 @@ public class TicketService {
         ticketDetails.setNoOfDaysTravel(ticket.getNoOfDaysTravel());
         ticketDetails.setPrebookFood(ticket.getPrebookFood());
         ticketDetails.setStatus(ticket.getStatus());
-        ticketDetails.setUser(userRepository.findById(ticket.getUser().getUserId())
+        ticketDetails.setUser(this.userRepository.findById(ticket.getUser().getUserId())
                 .orElseThrow(() -> new RuntimeException("User not found")));
-        ticketRepo.save(ticketDetails);
-    }
-
-    public void saveTicket(final TicketDTO ticket) {
-        TicketDetails ticketDetails = new TicketDetails();
-        ticketDetails.setTicketNumber(ticket.getTicketNumber());
-        ticketDetails.setDateOfBooking(ticket.getDateOfBooking());
-        ticketDetails.setDateOfTravel(ticket.getDateOfTravel());
-        ticketDetails.setTravelTiming(ticket.getTravelTiming());
-        ticketDetails.setTravelFrom(ticket.getTravelFrom());
-        ticketDetails.setTravelTo(ticket.getTravelTo());
-        ticketDetails.setNoOfDaysTravel(ticket.getNoOfDaysTravel());
-        ticketDetails.setPrebookFood(ticket.getPrebookFood());
-        ticketDetails.setStatus(ticket.getStatus());
-        ticketDetails.setUser(userRepository.findById(ticket.getUser().getUserId())
-                .orElseThrow(() -> new RuntimeException("User not found")));
-        ticketRepo.save(ticketDetails);
+        this.ticketRepo.save(ticketDetails);
     }
 
     public TicketDTO getTicketById(final Long id) {
-        toDTO();
-        for (TicketDTO TicketDTO : ticketList) {
+        for (TicketDTO TicketDTO : getTicketDetails()) {
             if (TicketDTO.getTicketId().equals(id)) {
                 return TicketDTO;
             }
@@ -84,20 +69,17 @@ public class TicketService {
     }
 
     public List<TicketDTO> getAllTickets() {
-        toDTO();
-        return new ArrayList<>(ticketList);
+        return new ArrayList<>(getTicketDetails());
     }
 
     public String deleteTicket(final Long ticketId) {
         final String[] str = {""};
-        toDTO();
-        ticketList.forEach(user -> {
+        str[0] = "No Id Matched";
+        getTicketDetails().forEach(user -> {
             if (user.getTicketId().equals(ticketId)) {
-                user.setStatus("De-Active");
-                toEntity(user);
+                user.setStatus(false);
+                saveTicket(user);
                 str[0] = "Deleted";
-            } else {
-                str[0] = "No Id Matched";
             }
         });
         return str[0];

@@ -16,22 +16,22 @@ public class TrainStationController {
 
     @GetMapping
     public List<TrainStationDTO> getAllTrainStations() {
-        return trainStationService.getAllTrainStations();
+        return this.trainStationService.getAllTrainStations();
     }
 
     @GetMapping("/{id}")
-    public TrainStationDTO getTrainStationById(@PathVariable long id) {
-        return trainStationService.getTrainStationById(id);
+    public TrainStationDTO getTrainStationById(@PathVariable final long id) {
+        return this.trainStationService.getTrainStationById(id);
     }
 
     @PostMapping
-    public void getTrainStationById(@RequestBody TrainStationDTO train) {
-        trainStationService.saveTrainStation(train);
+    public void getTrainStationById(@RequestBody final TrainStationDTO train) {
+        this.trainStationService.saveTrainStation(train);
     }
 
     @DeleteMapping("/{id}")
-    public String deleteTrainStation(@PathVariable long id) {
-        return trainStationService.deleteTrainStation(id);
+    public String deleteTrainStation(@PathVariable final long id) {
+        return this.trainStationService.deleteTrainStation(id);
     }
 }
 

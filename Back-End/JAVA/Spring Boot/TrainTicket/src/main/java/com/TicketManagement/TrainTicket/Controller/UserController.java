@@ -16,23 +16,23 @@ public class UserController {
     private final UserService userService;
 
     @PostMapping
-    public void createUser(@RequestBody UserDTO user) {
-        userService.saveUser(user);
+    public void createUser(@RequestBody final UserDTO user) {
+        this.userService.saveUser(user);
     }
 
     @GetMapping("/{id}")
-    public UserDTO getUserById(@PathVariable Long id) {
-        return userService.getUserById(id);
+    public UserDTO getUserById(@PathVariable final Long id) {
+        return this.userService.getUserById(id);
     }
 
     @GetMapping
     public List<UserDTO> getAllUsers() {
-        return userService.getAllUsers();
+        return this.userService.getAllUsers();
     }
 
     @DeleteMapping("/{id}")
-    public String deleteUser(@PathVariable Long id) {
-        return userService.deleteUser(id);
+    public String deleteUser(@PathVariable final Long id) {
+        return this.userService.deleteUser(id);
     }
 
 }
