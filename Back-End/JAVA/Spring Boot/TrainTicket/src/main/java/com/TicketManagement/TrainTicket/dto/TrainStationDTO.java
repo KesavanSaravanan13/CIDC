@@ -18,6 +18,7 @@ public class TrainStationDTO {
         this.place = place;
         this.status = status;
     }
+
     public boolean getStatus() {
         return this.status;
     }
