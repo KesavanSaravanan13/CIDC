@@ -3,6 +3,7 @@ package com.TicketManagement.TrainTicket.service;
 import com.TicketManagement.TrainTicket.dto.TrainStationDTO;
 import com.TicketManagement.TrainTicket.entity.Place;
 import com.TicketManagement.TrainTicket.entity.TrainStation;
+import com.TicketManagement.TrainTicket.repository.PlaceRepository;
 import com.TicketManagement.TrainTicket.repository.TrainStationRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -14,6 +15,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class TrainStationService {
 
+    private final PlaceRepository PlaceRepo;
     private final TrainStationRepository trainStationRepo;
     private List<TrainStationDTO> trainStationList;
 
@@ -37,9 +39,15 @@ public class TrainStationService {
         trainStationRepo.save(trainStation);
     }
 
-    public void saveTrainStation(final TrainStationDTO trainStation) {
-        toDTO();
-        new TrainStationDTO(trainStation.getStationId(), trainStation.getStationName(), trainStation.getPlace(), trainStation.getStatus());
+    public void saveTrainStation(final TrainStationDTO trainStationDTO) {
+        TrainStation trainStation = new TrainStation();
+        trainStation.setStationId(trainStationDTO.getStationId());
+        trainStation.setStationName(trainStationDTO.getStationName());
+        trainStation.setStatus(trainStationDTO.getStatus());
+        trainStation.setPlace(PlaceRepo.findById(trainStationDTO.getPlace().getPlaceId()).orElseThrow(() ->
+            new RuntimeException("No Place Found")
+        ));
+        trainStationRepo.save(trainStation);
     }
 
     public TrainStationDTO getTrainStationById(final Long id) {

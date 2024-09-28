@@ -35,10 +35,9 @@ public class UserService {
         userRepo.save(user);
     }
 
-
     public void saveUser(UserDTO user) {
         toDTO();
-        new UserDTO(user.getUserId(), user.getName(), user.getAddress(), user.getPhoneNumber(), user.getStatus());
+        toEntity(new UserDTO(user.getUserId(), user.getName(), user.getAddress(), user.getPhoneNumber(), user.getStatus()));
     }
 
     public UserDTO getUserById(Long id) {

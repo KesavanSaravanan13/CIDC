@@ -34,11 +34,6 @@ public class TicketDetailsController {
         ticketDetailsService.saveTicket(TicketDTO);
     }
 
-//    @PutMapping("/{ticketNum}")
-//    public void updateTicket(@PathVariable int ticketNum, @RequestBody TicketDTO TicketDTO) {
-//        ticketDetailsService.updateTicket(ticketNum, TicketDTO);
-//    }
-
     @DeleteMapping("/{ticketNum}")
     public String deleteTicket(@PathVariable Long ticketNum) {
         return ticketDetailsService.deleteTicket(ticketNum);
