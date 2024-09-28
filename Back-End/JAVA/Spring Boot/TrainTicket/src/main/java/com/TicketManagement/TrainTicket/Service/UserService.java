@@ -17,11 +17,11 @@ public class UserService {
 
     public List<UserDTO> getUserDetails() {
         List<UserDTO> userList = new ArrayList<>();
-        for (User user : this.userRepo.findAll()) {
+        this.userRepo.findAll().forEach(user -> {
             if (user.getStatus()) {
                 userList.add(new UserDTO(user.getUserId(), user.getName(), user.getAddress(), user.getPhoneNumber(), user.getStatus()));
             }
-        }
+        });
         return userList;
     }
 

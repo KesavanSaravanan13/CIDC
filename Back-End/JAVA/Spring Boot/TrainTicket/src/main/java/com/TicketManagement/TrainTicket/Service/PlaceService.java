@@ -17,11 +17,11 @@ public class PlaceService {
 
     public List<PlaceDTO> getPlaceDetails() {
         List<PlaceDTO> placeList = new ArrayList<>();
-        for (Place place : this.placeRepo.findAll()) {
+        this.placeRepo.findAll().forEach(place -> {
             if (place.getStatus()) {
                 placeList.add(new PlaceDTO(place.getPlaceId(), place.getPlaceName(), place.getNoOfStations(), place.getStatus()));
             }
-        }
+        });
         return placeList;
     }
 

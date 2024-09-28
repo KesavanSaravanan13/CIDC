@@ -20,7 +20,7 @@ public class TicketService {
 
     public List<TicketDTO> getTicketDetails() {
         List<TicketDTO> ticketList = new ArrayList<>();
-        for (TicketDetails ticket : this.ticketRepo.findAll()) {
+        this.ticketRepo.findAll().forEach(ticket -> {
             if (ticket.getStatus()) {
                 TicketDTO ticketObj = new TicketDTO();
                 ticketObj.setTicketId(ticket.getTicketId());
@@ -36,8 +36,7 @@ public class TicketService {
                 ticketObj.setTravelTiming(ticket.getTravelTiming());
                 ticketList.add(ticketObj);
             }
-        }
-
+        });
         return ticketList;
     }
 

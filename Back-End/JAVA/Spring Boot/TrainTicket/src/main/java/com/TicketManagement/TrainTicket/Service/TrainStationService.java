@@ -20,11 +20,11 @@ public class TrainStationService {
 
     public List<TrainStationDTO> getTrainDetails() {
         List<TrainStationDTO> trainStationList = new ArrayList<>();
-        for (TrainStation trainStation : this.trainStationRepo.findAll()) {
+        this.trainStationRepo.findAll().forEach(trainStation -> {
             if (trainStation.getStatus()) {
                 trainStationList.add(new TrainStationDTO(trainStation.getStationId(), trainStation.getStationName(), trainStation.getPlace(), trainStation.getStatus()));
             }
-        }
+        });
         return trainStationList;
     }
 
