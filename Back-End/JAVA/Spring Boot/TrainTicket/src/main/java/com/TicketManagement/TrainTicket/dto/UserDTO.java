@@ -12,9 +12,9 @@ public class UserDTO {
     private String name;
     private String address;
     private String phoneNumber;
-    private String status;
+    private boolean status;
 
-    public UserDTO(Long userId, String name, String address, String phoneNumber, String status) {
+    public UserDTO(Long userId, String name, String address, String phoneNumber, boolean status) {
         this.userId = userId;
         this.name = name;
         this.address = address;
@@ -22,5 +22,8 @@ public class UserDTO {
         this.status = status;
     }
 
+    public boolean getStatus() {
+        return this.status;
+    }
 
 }

@@ -10,12 +10,15 @@ public class TrainStationDTO {
     private Long stationId;
     private String stationName;
     private Place place;
-    private String status;
+    private boolean status;
 
-    public TrainStationDTO(Long stationId, String stationName, Place place, String status) {
+    public TrainStationDTO(Long stationId, String stationName, Place place, boolean status) {
         this.stationId = stationId;
         this.stationName = stationName;
         this.place = place;
         this.status = status;
+    }
+    public boolean getStatus() {
+        return this.status;
     }
 }

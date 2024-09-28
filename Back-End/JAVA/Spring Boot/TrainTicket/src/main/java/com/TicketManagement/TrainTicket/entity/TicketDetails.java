@@ -47,7 +47,9 @@ public class TicketDetails {
     private User user;
 
     @Column(name = "status")
-    private String status;
+    private boolean status;
 
-
+    public boolean getStatus() {
+        return this.status;
+    }
 }

@@ -23,6 +23,9 @@ public class Place {
     private int noOfStations;
 
     @Column(name = "status", nullable = false)
-    private String status;
+    private boolean status;
 
+    public boolean getStatus() {
+        return this.status;
+    }
 }

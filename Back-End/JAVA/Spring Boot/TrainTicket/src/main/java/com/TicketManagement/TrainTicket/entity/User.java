@@ -26,5 +26,9 @@ public class User {
     private String phoneNumber;
 
     @Column(name = "status")
-    private String status;
+    private boolean status;
+
+    public boolean getStatus() {
+        return this.status;
+    }
 }

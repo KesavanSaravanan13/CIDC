@@ -10,12 +10,16 @@ public class PlaceDTO {
     private Long placeId;
     private String placeName;
     private int noOfStations;
-    private String status;
+    private boolean status;
 
-    public PlaceDTO(Long placeId, String placeName, int noOfStations, String status) {
+    public PlaceDTO(Long placeId, String placeName, int noOfStations, boolean status) {
         this.placeId = placeId;
         this.placeName = placeName;
         this.noOfStations = noOfStations;
         this.status = status;
+    }
+
+    public boolean getStatus() {
+        return this.status;
     }
 }

@@ -21,6 +21,11 @@ public class TicketDTO {
     private Integer noOfDaysTravel;
     private Boolean prebookFood;
     private User user;
-    private String status;
+    private boolean status;
+
+    public boolean getStatus() {
+        return this.status;
+    }
+
 
 }
