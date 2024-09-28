@@ -12,6 +12,7 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 public class PlaceService {
+
     private final PlaceRepository placeRepo;
     private List<PlaceDTO> placeList;
 
@@ -29,12 +30,18 @@ public class PlaceService {
         place.setPlaceId(placeDTO.getPlaceId());
         place.setPlaceName(placeDTO.getPlaceName());
         place.setNoOfStations(placeDTO.getNoOfStations());
+        place.setStatus(placeDTO.getStatus());
         placeRepo.save(place);
     }
 
     public void savePlace(final PlaceDTO place) {
         toDTO();
-        new PlaceDTO(place.getPlaceId(), place.getPlaceName(), place.getNoOfStations(), place.getStatus());
+        Place placeObj = new Place();
+        placeObj.setPlaceId(place.getPlaceId());
+        placeObj.setPlaceName(place.getPlaceName());
+        placeObj.setNoOfStations(place.getNoOfStations());
+        placeObj.setStatus(place.getStatus());
+        placeRepo.save(placeObj);
     }
 
     public PlaceDTO getPlaceById(Long id) {

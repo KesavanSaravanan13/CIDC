@@ -23,21 +23,4 @@ public class TicketDTO {
     private User user;
     private String status;
 
-    public TicketDTO(Long ticketId, Long ticketNumber,
-                     LocalDate dateOfBooking, LocalDate dateOfTravel,
-                     LocalTime travelTiming, String travelFrom,
-                     String travelTo, Integer noOfDaysTravel,
-                     Boolean prebookFood, User userId, String status) {
-        this.ticketId = ticketId;
-        this.ticketNumber = ticketNumber;
-        this.dateOfBooking = dateOfBooking;
-        this.dateOfTravel = dateOfTravel;
-        this.travelTiming = travelTiming;
-        this.travelFrom = travelFrom;
-        this.travelTo = travelTo;
-        this.noOfDaysTravel = noOfDaysTravel;
-        this.prebookFood = prebookFood;
-        this.user = userId;
-        this.status = status;
-    }
 }

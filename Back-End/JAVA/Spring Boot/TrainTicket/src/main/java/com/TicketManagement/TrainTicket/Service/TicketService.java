@@ -4,6 +4,7 @@ import com.TicketManagement.TrainTicket.dto.TicketDTO;
 import com.TicketManagement.TrainTicket.entity.TicketDetails;
 import com.TicketManagement.TrainTicket.entity.User;
 import com.TicketManagement.TrainTicket.repository.TicketDetailsRepository;
+import com.TicketManagement.TrainTicket.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -13,6 +14,8 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 public class TicketService {
+
+    private final UserRepository userRepository;
     private final TicketDetailsRepository ticketRepo;
     private List<TicketDTO> ticketList;
 
@@ -20,41 +23,54 @@ public class TicketService {
         ticketList = new ArrayList<>();
         for (TicketDetails ticket : ticketRepo.findAll()) {
             if (ticket.getStatus() != null && ticket.getStatus().equalsIgnoreCase("Reserved")) {
-                ticketList.add(new TicketDTO(ticket.getTicketId(), ticket.getTicketNumber(),
-                        ticket.getDateOfBooking(), ticket.getDateOfTravel(),
-                        ticket.getTravelTiming(), ticket.getTravelFrom(),
-                        ticket.getTravelTo(), ticket.getNoOfDaysTravel(),
-                        ticket.getPrebookFood(), ticket.getUser(), ticket.getStatus()));
+                TicketDTO ticketObj = new TicketDTO();
+                ticketObj.setTicketId(ticket.getTicketId());
+                ticketObj.setTicketNumber(ticket.getTicketNumber());
+                ticketObj.setDateOfBooking(ticket.getDateOfBooking());
+                ticketObj.setPrebookFood(ticket.getPrebookFood());
+                ticketObj.setDateOfTravel(ticket.getDateOfTravel());
+                ticketObj.setNoOfDaysTravel(ticket.getNoOfDaysTravel());
+                ticketObj.setTravelFrom(ticket.getTravelFrom());
+                ticketObj.setUser(ticket.getUser());
+                ticketObj.setTravelTo(ticket.getTravelTo());
+                ticketObj.setStatus(ticket.getStatus());
+                ticketObj.setTravelTiming(ticket.getTravelTiming());
+                ticketList.add(ticketObj);
             }
         }
     }
 
-    public void toEntity(final TicketDTO ticketDetailsDTO) {
+    public void toEntity(final TicketDTO ticket) {
         TicketDetails ticketDetails = new TicketDetails();
-        ticketDetails.setTicketId(ticketDetailsDTO.getTicketId());
-        ticketDetails.setTicketNumber(ticketDetailsDTO.getTicketNumber());
-        ticketDetails.setDateOfBooking(ticketDetailsDTO.getDateOfBooking());
-        ticketDetails.setDateOfTravel(ticketDetailsDTO.getDateOfTravel());
-        ticketDetails.setTravelTiming(ticketDetailsDTO.getTravelTiming());
-        ticketDetails.setTravelFrom(ticketDetailsDTO.getTravelFrom());
-        ticketDetails.setTravelTo(ticketDetailsDTO.getTravelTo());
-        ticketDetails.setNoOfDaysTravel(ticketDetailsDTO.getNoOfDaysTravel());
-        ticketDetails.setPrebookFood(ticketDetailsDTO.getPrebookFood());
-
-        User user = new User();
-        user.setUserId(ticketDetailsDTO.getUser().getUserId());
-        ticketDetails.setUser(user);
-
+        ticketDetails.setTicketId(ticket.getTicketId());
+        ticketDetails.setTicketNumber(ticket.getTicketNumber());
+        ticketDetails.setDateOfBooking(ticket.getDateOfBooking());
+        ticketDetails.setDateOfTravel(ticket.getDateOfTravel());
+        ticketDetails.setTravelTiming(ticket.getTravelTiming());
+        ticketDetails.setTravelFrom(ticket.getTravelFrom());
+        ticketDetails.setTravelTo(ticket.getTravelTo());
+        ticketDetails.setNoOfDaysTravel(ticket.getNoOfDaysTravel());
+        ticketDetails.setPrebookFood(ticket.getPrebookFood());
+        ticketDetails.setStatus(ticket.getStatus());
+        ticketDetails.setUser(userRepository.findById(ticket.getUser().getUserId())
+                .orElseThrow(() -> new RuntimeException("User not found")));
         ticketRepo.save(ticketDetails);
     }
 
     public void saveTicket(final TicketDTO ticket) {
-        toDTO();
-        new TicketDTO(ticket.getTicketId(), ticket.getTicketNumber(),
-                ticket.getDateOfBooking(), ticket.getDateOfTravel(),
-                ticket.getTravelTiming(), ticket.getTravelFrom(),
-                ticket.getTravelTo(), ticket.getNoOfDaysTravel(),
-                ticket.getPrebookFood(), ticket.getUser(), ticket.getStatus());
+        TicketDetails ticketDetails = new TicketDetails();
+        ticketDetails.setTicketNumber(ticket.getTicketNumber());
+        ticketDetails.setDateOfBooking(ticket.getDateOfBooking());
+        ticketDetails.setDateOfTravel(ticket.getDateOfTravel());
+        ticketDetails.setTravelTiming(ticket.getTravelTiming());
+        ticketDetails.setTravelFrom(ticket.getTravelFrom());
+        ticketDetails.setTravelTo(ticket.getTravelTo());
+        ticketDetails.setNoOfDaysTravel(ticket.getNoOfDaysTravel());
+        ticketDetails.setPrebookFood(ticket.getPrebookFood());
+        ticketDetails.setStatus(ticket.getStatus());
+        ticketDetails.setUser(userRepository.findById(ticket.getUser().getUserId())
+                .orElseThrow(() -> new RuntimeException("User not found")));
+        ticketRepo.save(ticketDetails);
     }
 
     public TicketDTO getTicketById(final Long id) {
