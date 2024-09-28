@@ -1,10 +1,8 @@
 package com.TicketManagement.TrainTicket.controller;
 
 import com.TicketManagement.TrainTicket.dto.TicketDTO;
-import com.TicketManagement.TrainTicket.repository.UserRepository;
 import com.TicketManagement.TrainTicket.service.TicketService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -15,9 +13,6 @@ import java.util.List;
 public class TicketDetailsController {
 
     private final TicketService ticketDetailsService;
-
-    @Autowired
-    private UserRepository userDetailsRepository;
 
     @GetMapping
     public List<TicketDTO> getAllTickets() {
