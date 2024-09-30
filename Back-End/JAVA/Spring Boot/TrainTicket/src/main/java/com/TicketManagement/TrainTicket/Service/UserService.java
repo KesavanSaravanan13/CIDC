@@ -37,12 +37,8 @@ public class UserService {
     }
 
     public UserDTO getUserById(final Long id) {
-        for (UserDTO userDTO : getUserDetails()) {
-            if (userDTO.getUserId().equals(id)) {
-                return userDTO;
-            }
-        }
-        return null;
+        User user= this.userRepo.findById(id).orElseThrow(()->new RuntimeException("Not Found"));
+        return new UserDTO(user.getUserId(),user.getName(),user.getAddress(),user.getPhoneNumber(),user.getStatus());
     }
 
     public List<UserDTO> getAllUsers() {

@@ -2,7 +2,6 @@ package com.TicketManagement.TrainTicket.service;
 
 import com.TicketManagement.TrainTicket.dto.TicketDTO;
 import com.TicketManagement.TrainTicket.entity.TicketDetails;
-import com.TicketManagement.TrainTicket.entity.User;
 import com.TicketManagement.TrainTicket.repository.TicketDetailsRepository;
 import com.TicketManagement.TrainTicket.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -22,19 +21,19 @@ public class TicketService {
         List<TicketDTO> ticketList = new ArrayList<>();
         this.ticketRepo.findAll().forEach(ticket -> {
             if (ticket.getStatus()) {
-                TicketDTO ticketObj = new TicketDTO();
-                ticketObj.setTicketId(ticket.getTicketId());
-                ticketObj.setTicketNumber(ticket.getTicketNumber());
-                ticketObj.setDateOfBooking(ticket.getDateOfBooking());
-                ticketObj.setPrebookFood(ticket.getPrebookFood());
-                ticketObj.setDateOfTravel(ticket.getDateOfTravel());
-                ticketObj.setNoOfDaysTravel(ticket.getNoOfDaysTravel());
-                ticketObj.setTravelFrom(ticket.getTravelFrom());
-                ticketObj.setUser(ticket.getUser());
-                ticketObj.setTravelTo(ticket.getTravelTo());
-                ticketObj.setStatus(ticket.getStatus());
-                ticketObj.setTravelTiming(ticket.getTravelTiming());
-                ticketList.add(ticketObj);
+                TicketDTO ticketDTO = new TicketDTO();
+                ticketDTO.setTicketId(ticket.getTicketId());
+                ticketDTO.setTicketNumber(ticket.getTicketNumber());
+                ticketDTO.setDateOfBooking(ticket.getDateOfBooking());
+                ticketDTO.setPrebookFood(ticket.getPrebookFood());
+                ticketDTO.setDateOfTravel(ticket.getDateOfTravel());
+                ticketDTO.setNoOfDaysTravel(ticket.getNoOfDaysTravel());
+                ticketDTO.setTravelFrom(ticket.getTravelFrom());
+                ticketDTO.setUser(ticket.getUser());
+                ticketDTO.setTravelTo(ticket.getTravelTo());
+                ticketDTO.setStatus(ticket.getStatus());
+                ticketDTO.setTravelTiming(ticket.getTravelTiming());
+                ticketList.add(ticketDTO);
             }
         });
         return ticketList;
@@ -59,12 +58,9 @@ public class TicketService {
     }
 
     public TicketDTO getTicketById(final Long id) {
-        for (TicketDTO TicketDTO : getTicketDetails()) {
-            if (TicketDTO.getTicketId().equals(id)) {
-                return TicketDTO;
-            }
-        }
-        return null;
+        return getTicketDetails().stream().filter(ticketDTO ->
+                ticketDTO.getTicketId().equals(id)
+        ).findFirst().orElseThrow(()->new RuntimeException("Not Found"));
     }
 
     public List<TicketDTO> getAllTickets() {

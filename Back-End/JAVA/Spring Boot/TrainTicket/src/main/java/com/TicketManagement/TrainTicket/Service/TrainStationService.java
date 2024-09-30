@@ -1,7 +1,6 @@
 package com.TicketManagement.TrainTicket.service;
 
 import com.TicketManagement.TrainTicket.dto.TrainStationDTO;
-import com.TicketManagement.TrainTicket.entity.Place;
 import com.TicketManagement.TrainTicket.entity.TrainStation;
 import com.TicketManagement.TrainTicket.repository.PlaceRepository;
 import com.TicketManagement.TrainTicket.repository.TrainStationRepository;
@@ -41,12 +40,8 @@ public class TrainStationService {
     }
 
     public TrainStationDTO getTrainStationById(final Long id) {
-        for (TrainStationDTO TrainStationDTO : getTrainDetails()) {
-            if (TrainStationDTO.getStationId().equals(id)) {
-                return TrainStationDTO;
-            }
-        }
-        return null;
+        TrainStation trainStation = this.trainStationRepo.findById(id).orElseThrow(()->new RuntimeException("Not Found"));
+        return new TrainStationDTO(trainStation.getStationId(),trainStation.getStationName(),trainStation.getPlace(),trainStation.getStatus());
     }
 
     public List<TrainStationDTO> getAllTrainStations() {
