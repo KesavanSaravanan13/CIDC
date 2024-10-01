@@ -58,9 +58,20 @@ public class TicketService {
     }
 
     public TicketDTO getTicketById(final Long id) {
-        return getTicketDetails().stream().filter(ticketDTO ->
-                ticketDTO.getTicketId().equals(id)
-        ).findFirst().orElseThrow(()->new RuntimeException("Not Found"));
+        TicketDetails ticketDetails = this.ticketRepo.findById(id).orElseThrow(()->new RuntimeException("Not Found"));
+        TicketDTO ticketDTO = new TicketDTO();
+        ticketDTO.setTicketId(ticketDetails.getTicketId());
+        ticketDTO.setTicketNumber(ticketDetails.getTicketNumber());
+        ticketDTO.setDateOfBooking(ticketDetails.getDateOfBooking());
+        ticketDTO.setPrebookFood(ticketDetails.getPrebookFood());
+        ticketDTO.setDateOfTravel(ticketDetails.getDateOfTravel());
+        ticketDTO.setNoOfDaysTravel(ticketDetails.getNoOfDaysTravel());
+        ticketDTO.setTravelFrom(ticketDetails.getTravelFrom());
+        ticketDTO.setUser(ticketDetails.getUser());
+        ticketDTO.setTravelTo(ticketDetails.getTravelTo());
+        ticketDTO.setStatus(ticketDetails.getStatus());
+        ticketDTO.setTravelTiming(ticketDetails.getTravelTiming());
+        return ticketDTO;
     }
 
     public List<TicketDTO> getAllTickets() {
