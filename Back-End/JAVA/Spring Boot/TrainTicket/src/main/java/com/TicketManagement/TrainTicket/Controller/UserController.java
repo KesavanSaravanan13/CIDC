@@ -5,6 +5,7 @@ import com.TicketManagement.TrainTicket.dto.UserDTO;
 import com.TicketManagement.TrainTicket.entity.User;
 import com.TicketManagement.TrainTicket.service.UserService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -34,6 +35,11 @@ public class UserController {
     @DeleteMapping("/{id}")
     public String deleteUser(@PathVariable final Long id) {
         return this.userService.deleteUser(id);
+    }
+
+    @PostMapping("/login")
+    public String loginUser(@RequestBody User user){
+        return this.userService.verifyUser(user);
     }
 
 }
