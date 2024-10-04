@@ -13,6 +13,7 @@ public class UserPrincipal implements UserDetails {
     private User user;
 
     public UserPrincipal(User user) {
+        System.out.println(user);
         this.user = user;
     }
 
@@ -28,7 +29,7 @@ public class UserPrincipal implements UserDetails {
 
     @Override
     public String getUsername() {
-        return user.getName();
+        return user.getUserName();
     }
 
     @Override

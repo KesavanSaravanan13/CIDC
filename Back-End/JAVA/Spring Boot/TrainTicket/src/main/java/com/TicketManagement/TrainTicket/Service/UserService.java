@@ -25,7 +25,7 @@ public class UserService {
         List<UserDTO> userList = new ArrayList<>();
         this.userRepo.findAll().forEach(user -> {
             if (user.getStatus()) {
-                userList.add(new UserDTO(user.getUserId(), user.getName(), user.getAddress(), user.getPhoneNumber(), user.getStatus()));
+                userList.add(new UserDTO(user.getUserId(), user.getUserName(), user.getAddress(), user.getPhoneNumber(), user.getStatus()));
             }
         });
         return userList;
@@ -39,7 +39,7 @@ public class UserService {
 
     public UserDTO getUserById(final Long id) {
         User user = this.userRepo.findById(id).orElseThrow(() -> new RuntimeException("Not Found"));
-        return new UserDTO(user.getUserId(), user.getName(), user.getAddress(), user.getPhoneNumber(), user.getStatus());
+        return new UserDTO(user.getUserId(), user.getUserName(), user.getAddress(), user.getPhoneNumber(), user.getStatus());
     }
 
     public List<UserDTO> getAllUsers() {
@@ -55,7 +55,7 @@ public class UserService {
                 User userDTO = new User();
                 userDTO.setUserId(user.getUserId());
                 userDTO.setStatus(user.getStatus());
-                userDTO.setName(user.getName());
+                userDTO.setUserName(user.getUserName());
                 userDTO.setAddress(user.getAddress());
                 saveUser(userDTO);
                 str[0] = "Deleted";
@@ -66,10 +66,10 @@ public class UserService {
 
 
     public String verifyUser(User user) {
-        Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(user.getName(), user.getPassword()));
+        Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(user.getUserName(), user.getPassword()));
 
         if (authentication.isAuthenticated())
-            return JWTService.generateToken(user.getName());
+            return JWTService.generateToken(user.getUserName());
         return "Not Authenticated";
     }
 }
