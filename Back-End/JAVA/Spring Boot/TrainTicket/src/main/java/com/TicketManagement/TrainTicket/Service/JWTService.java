@@ -4,6 +4,7 @@ import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
@@ -20,11 +21,17 @@ import java.util.function.Function;
 @Service
 public class JWTService {
 
-    private static String secretKey = "";
+    private static String secretKey="";
+
+    @Value("${jwt.experationDate}")
+    private int experationDate;
+
+    @Value("${jwt.algorithm}")
+    private String algorithm;
 
     public JWTService() {
         try {
-            KeyGenerator key = KeyGenerator.getInstance("HmacSHA256");
+            KeyGenerator key = KeyGenerator.getInstance(algorithm);
             SecretKey secret = key.generateKey();
             secretKey = Base64.getEncoder().encodeToString(secret.getEncoded());
         } catch (NoSuchAlgorithmException e) {
@@ -33,7 +40,7 @@ public class JWTService {
 
     }
 
-    public static String generateToken(final String username) {
+    public String generateToken(final String username) {
 
         Map<String, Object> claims = new HashMap<>();
 
@@ -42,7 +49,7 @@ public class JWTService {
                 .add(claims)
                 .subject(username)
                 .issuedAt(new Date(System.currentTimeMillis()))
-                .expiration(new Date(System.currentTimeMillis() + 100 * 60 * 30))
+                .expiration(new Date(System.currentTimeMillis() + experationDate))
                 .and()
                 .signWith(getKey())
                 .compact();

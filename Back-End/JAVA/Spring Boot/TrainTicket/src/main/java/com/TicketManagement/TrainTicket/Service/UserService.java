@@ -18,6 +18,7 @@ import java.util.List;
 public class UserService {
 
     private final UserRepository userRepo;
+    private final JWTService jwtService;
     private final BCryptPasswordEncoder encrypt = new BCryptPasswordEncoder();
     private final AuthenticationManager authenticationManager;
 
@@ -69,7 +70,7 @@ public class UserService {
         Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(user.getUserName(), user.getPassword()));
 
         if (authentication.isAuthenticated())
-            return JWTService.generateToken(user.getUserName());
+            return jwtService.generateToken(user.getUserName());
         return "Not Authenticated";
     }
 }
