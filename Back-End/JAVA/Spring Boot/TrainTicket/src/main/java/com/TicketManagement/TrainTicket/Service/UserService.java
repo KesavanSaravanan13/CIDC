@@ -18,7 +18,7 @@ import java.util.List;
 public class UserService {
 
     private final UserRepository userRepo;
-    private BCryptPasswordEncoder encrypt = new BCryptPasswordEncoder();
+    private final BCryptPasswordEncoder encrypt = new BCryptPasswordEncoder();
     private final AuthenticationManager authenticationManager;
 
     public List<UserDTO> getUserDetails() {
