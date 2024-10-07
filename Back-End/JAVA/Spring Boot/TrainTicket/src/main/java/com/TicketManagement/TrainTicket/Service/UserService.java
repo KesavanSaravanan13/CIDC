@@ -46,7 +46,7 @@ public class UserService {
         return new ArrayList<>(getUserDetails());
     }
 
-    public String deleteUser(Long userId) {
+    public String deleteUser(final Long userId) {
         final String[] str = {""};
         str[0] = "No Id Matched";
         getUserDetails().forEach(user -> {
@@ -65,7 +65,7 @@ public class UserService {
     }
 
 
-    public String verifyUser(User user) {
+    public String verifyUser(final User user) {
         Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(user.getUserName(), user.getPassword()));
 
         if (authentication.isAuthenticated())
