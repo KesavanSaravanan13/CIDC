@@ -21,17 +21,18 @@ import java.util.function.Function;
 @Service
 public class JWTService {
 
-    private static String secretKey="";
+    private static String secretKey = "";
 
-    @Value("${jwt.experationDate}")
-    private int experationDate;
+    @Value("${signature.expirationDate}")
+    private int expirationDate;
 
-    @Value("${jwt.algorithm}")
-    private String algorithm;
+    private final String algorithm;
 
-    public JWTService() {
+    public JWTService(@Value("${signature.algorithm}") String algorithm) {
         try {
-            KeyGenerator key = KeyGenerator.getInstance(algorithm);
+            this.algorithm = algorithm;
+            KeyGenerator key = KeyGenerator.getInstance(this.algorithm);
+            key.init(256);
             SecretKey secret = key.generateKey();
             secretKey = Base64.getEncoder().encodeToString(secret.getEncoded());
         } catch (NoSuchAlgorithmException e) {
@@ -49,7 +50,7 @@ public class JWTService {
                 .add(claims)
                 .subject(username)
                 .issuedAt(new Date(System.currentTimeMillis()))
-                .expiration(new Date(System.currentTimeMillis() + experationDate))
+                .expiration(new Date(System.currentTimeMillis() + expirationDate))
                 .and()
                 .signWith(getKey())
                 .compact();
@@ -60,7 +61,7 @@ public class JWTService {
         return Keys.hmacShaKeyFor(keyBytes);
     }
 
-    public boolean validateToken(final String token,final UserDetails userDetails) {
+    public boolean validateToken(final String token, final UserDetails userDetails) {
         final String userName = extractUserName(token);
         return (userName.equals(userDetails.getUsername()) && !isTokenExpired(token));
     }
@@ -77,7 +78,7 @@ public class JWTService {
         return extractClaim(token, Claims::getExpiration);
     }
 
-    private <T> T extractClaim(final String token,final Function<Claims, T> claimResolver) {
+    private <T> T extractClaim(final String token, final Function<Claims, T> claimResolver) {
         final Claims claims = extractAllClaims(token);
         return claimResolver.apply(claims);
     }

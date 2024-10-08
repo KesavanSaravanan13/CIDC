@@ -9,6 +9,7 @@ import lombok.Setter;
 public class UserDTO {
 
     private Long userId;
+    @Getter
     private String userName;
     private String address;
     private String phoneNumber;

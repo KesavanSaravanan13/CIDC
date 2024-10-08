@@ -4,6 +4,7 @@ import com.TicketManagement.TrainTicket.dto.UserDTO;
 import com.TicketManagement.TrainTicket.entity.User;
 import com.TicketManagement.TrainTicket.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.context.ApplicationContext;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -21,6 +22,7 @@ public class UserService {
     private final JWTService jwtService;
     private final BCryptPasswordEncoder encrypt = new BCryptPasswordEncoder();
     private final AuthenticationManager authenticationManager;
+    private final ApplicationContext context;
 
     public List<UserDTO> getUserDetails() {
         List<UserDTO> userList = new ArrayList<>();
@@ -68,9 +70,13 @@ public class UserService {
 
     public String verifyUser(final User user) {
         Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(user.getUserName(), user.getPassword()));
-
-        if (authentication.isAuthenticated())
-            return jwtService.generateToken(user.getUserName());
+        if (authentication.isAuthenticated()) {
+            if (userRepo.getByUserName(user.getUserName()).getStatus())
+                return jwtService.generateToken(user.getUserName());
+            else {
+                return "Not a Active User";
+            }
+        }
         return "Not Authenticated";
     }
 }
