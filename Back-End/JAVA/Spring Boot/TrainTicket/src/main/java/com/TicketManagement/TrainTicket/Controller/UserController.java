@@ -15,6 +15,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/user")
@@ -38,6 +39,11 @@ public class UserController {
     @GetMapping
     public List<UserDTO> getAllUsers() {
         return this.userService.getAllUsers();
+    }
+
+    @GetMapping("/error")
+    public ResponseEntity<?> getErrors() {
+        return ResponseEntity.ok(Optional.ofNullable(userService.getAllUsers()));
     }
 
     @DeleteMapping("/{id}")
