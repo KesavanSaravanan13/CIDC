@@ -5,6 +5,8 @@ import com.TicketManagement.TrainTicket.entity.User;
 import com.TicketManagement.TrainTicket.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.ApplicationContext;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -40,9 +42,12 @@ public class UserService {
         this.userRepo.save(user);
     }
 
-    public UserDTO getUserById(final Long id) {
+    public Object getUserById(final Long id) {
         User user = this.userRepo.findById(id).orElseThrow(() -> new RuntimeException("Not Found"));
-        return new UserDTO(user.getUserId(), user.getUserName(), user.getAddress(), user.getPhoneNumber(), user.getStatus());
+        if (user.getStatus())
+            return new UserDTO(user.getUserId(), user.getUserName(), user.getAddress(), user.getPhoneNumber(), user.getStatus());
+        else
+            return new ResponseEntity<>("Not an Active User", HttpStatus.OK);
     }
 
     public List<UserDTO> getAllUsers() {

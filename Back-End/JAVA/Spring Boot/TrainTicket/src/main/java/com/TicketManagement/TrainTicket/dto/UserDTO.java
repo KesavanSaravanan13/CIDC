@@ -23,6 +23,10 @@ public class UserDTO {
         this.status = status;
     }
 
+    public UserDTO() {
+
+    }
+
     public boolean getStatus() {
         return this.status;
     }

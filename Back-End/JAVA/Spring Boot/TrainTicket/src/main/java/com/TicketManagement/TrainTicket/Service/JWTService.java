@@ -1,17 +1,16 @@
 package com.TicketManagement.TrainTicket.service;
 
+import com.TicketManagement.TrainTicket.exception.TokenNotFoundException;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
-import javax.crypto.KeyGenerator;
 import javax.crypto.SecretKey;
-import java.security.NoSuchAlgorithmException;
-import java.util.Base64;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -21,25 +20,25 @@ import java.util.function.Function;
 @Service
 public class JWTService {
 
-    private static String secretKey = "";
+    private final static String secretKey = "4b0fad179f45e9b67ab9048f6e21e6203b1e2f9d814754ccee3f8fe64f0c236f";
 
     @Value("${signature.expirationDate}")
     private int expirationDate;
 
-    private final String algorithm;
+//    private final String algorithm;
 
-    public JWTService(@Value("${signature.algorithm}") String algorithm) {
-        try {
-            this.algorithm = algorithm;
-            KeyGenerator key = KeyGenerator.getInstance(this.algorithm);
-            key.init(256);
-            SecretKey secret = key.generateKey();
-            secretKey = Base64.getEncoder().encodeToString(secret.getEncoded());
-        } catch (NoSuchAlgorithmException e) {
-            throw new RuntimeException(e);
-        }
-
-    }
+//    public JWTService(@Value("${signature.algorithm}") String algorithm) {
+//        try {
+//            this.algorithm = algorithm;
+//            KeyGenerator key = KeyGenerator.getInstance(this.algorithm);
+//            key.init(256);
+//            SecretKey secret = key.generateKey();
+//            secretKey = Base64.getEncoder().encodeToString(secret.getEncoded());
+//        } catch (NoSuchAlgorithmException e) {
+//            throw new RuntimeException(e);
+//        }
+//
+//    }
 
     public String generateToken(final String username) {
 
@@ -52,7 +51,7 @@ public class JWTService {
                 .issuedAt(new Date(System.currentTimeMillis()))
                 .expiration(new Date(System.currentTimeMillis() + expirationDate))
                 .and()
-                .signWith(getKey())
+                .signWith(SignatureAlgorithm.HS256, secretKey)
                 .compact();
     }
 
@@ -67,7 +66,11 @@ public class JWTService {
     }
 
     private boolean isTokenExpired(final String token) {
-        return extractExpiration(token).before(new Date());
+        if (extractExpiration(token).before(new Date())) {
+            throw new TokenNotFoundException("Token Expired");
+        }
+        return false;
+
     }
 
     public String extractUserName(final String token) {
@@ -84,6 +87,7 @@ public class JWTService {
     }
 
     private Claims extractAllClaims(final String token) {
+
         return Jwts.parser()
                 .verifyWith(getKey())
                 .build()
