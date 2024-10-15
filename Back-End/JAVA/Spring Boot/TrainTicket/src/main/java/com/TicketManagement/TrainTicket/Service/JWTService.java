@@ -2,6 +2,7 @@ package com.TicketManagement.TrainTicket.service;
 
 import com.TicketManagement.TrainTicket.exception.TokenNotFoundException;
 import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.io.Decoders;
@@ -95,20 +96,10 @@ public class JWTService {
                     .parseSignedClaims(token)
                     .getPayload();
 
+        } catch (ExpiredJwtException e) {
+            throw new TokenNotFoundException("Your token has expired. Please log in again.");
         } catch (Exception e) {
-            throw new TokenNotFoundException("Token Expired" + e.getMessage());
+            throw new RuntimeException("Invalid token");
         }
-//        try {
-//            return Jwts.parser()
-//                    .verifyWith(getKey())
-//                    .build()
-//                    .parseSignedClaims(token)
-//                    .getPayload();
-//
-//        } catch (ExpiredJwtException e) {
-//            System.out.println();
-//        }catch (Exception e) {
-//            System.out.println(e.getMessage());
-//        }
     }
 }
