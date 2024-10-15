@@ -20,7 +20,8 @@ import java.util.function.Function;
 @Service
 public class JWTService {
 
-    private final static String secretKey = "6c59b9a6445570c5d0467b3a68b3f7da1becf5e7c37399722e35b9c9845aeefd";
+    @Value("${signature.secretKey}")
+    private String secretKey;
 
     @Value("${signature.expirationDate}")
     private int expirationDate;
@@ -55,7 +56,7 @@ public class JWTService {
                 .compact();
     }
 
-    private static SecretKey getKey() {
+    private SecretKey getKey() {
         byte[] keyBytes = Decoders.BASE64.decode(secretKey);
         return Keys.hmacShaKeyFor(keyBytes);
     }
@@ -95,8 +96,19 @@ public class JWTService {
                     .getPayload();
 
         } catch (Exception e) {
-            throw new TokenNotFoundException("Token Expired"+e.getMessage());
+            throw new TokenNotFoundException("Token Expired" + e.getMessage());
         }
-
+//        try {
+//            return Jwts.parser()
+//                    .verifyWith(getKey())
+//                    .build()
+//                    .parseSignedClaims(token)
+//                    .getPayload();
+//
+//        } catch (ExpiredJwtException e) {
+//            System.out.println();
+//        }catch (Exception e) {
+//            System.out.println(e.getMessage());
+//        }
     }
 }

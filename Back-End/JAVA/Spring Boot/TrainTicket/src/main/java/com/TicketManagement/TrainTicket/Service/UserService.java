@@ -2,11 +2,13 @@ package com.TicketManagement.TrainTicket.service;
 
 import com.TicketManagement.TrainTicket.dto.UserDTO;
 import com.TicketManagement.TrainTicket.entity.User;
+import com.TicketManagement.TrainTicket.exception.NoIdMatchedException;
+import com.TicketManagement.TrainTicket.exception.NotAnActiveUserException;
+import com.TicketManagement.TrainTicket.exception.NotAuthenticatedException;
+import com.TicketManagement.TrainTicket.exception.UserNotFoundException;
 import com.TicketManagement.TrainTicket.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.ApplicationContext;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -42,12 +44,12 @@ public class UserService {
         this.userRepo.save(user);
     }
 
-    public Object getUserById(final Long id) {
-        User user = this.userRepo.findById(id).orElseThrow(() -> new RuntimeException("Not Found"));
+    public UserDTO getUserById(final Long id) {
+        User user = this.userRepo.findById(id).orElseThrow(() -> new UserNotFoundException("User Not Found"));
         if (user.getStatus())
             return new UserDTO(user.getUserId(), user.getUserName(), user.getAddress(), user.getPhoneNumber(), user.getStatus());
         else
-            return new ResponseEntity<>("Not an Active User", HttpStatus.OK);
+            throw new NotAnActiveUserException("Not an Active User");
     }
 
     public List<UserDTO> getAllUsers() {
@@ -68,6 +70,9 @@ public class UserService {
                 saveUser(userDTO);
                 str[0] = "Deleted";
             }
+            else{
+                throw new NoIdMatchedException("No ID Matched");
+            }
         });
         return str[0];
     }
@@ -79,10 +84,12 @@ public class UserService {
             if (userRepo.getByUserName(user.getUserName()).getStatus())
                 return jwtService.generateToken(user.getUserName());
             else {
-                return "Not a Active User";
+                throw new NotAnActiveUserException("Not an Active User");
             }
         }
-        return "Not Authenticated";
+        else{
+            throw new NotAuthenticatedException("Not Authenticated");
+        }
     }
 }
 

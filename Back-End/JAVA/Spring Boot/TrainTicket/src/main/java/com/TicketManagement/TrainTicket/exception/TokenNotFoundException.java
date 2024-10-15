@@ -1,22 +1,22 @@
 package com.TicketManagement.TrainTicket.exception;
 
-public class TokenNotFoundException extends RuntimeException{
+public class TokenNotFoundException extends RuntimeException {
     public TokenNotFoundException() {
     }
 
-    public TokenNotFoundException(String message) {
+    public TokenNotFoundException(final String message) {
         super(message);
     }
 
-    public TokenNotFoundException(String message, Throwable cause) {
+    public TokenNotFoundException(final String message, final Throwable cause) {
         super(message, cause);
     }
 
-    public TokenNotFoundException(Throwable cause) {
+    public TokenNotFoundException(final Throwable cause) {
         super(cause);
     }
 
-    public TokenNotFoundException(String message, Throwable cause, boolean enableSuppression, boolean writableStackTrace) {
+    public TokenNotFoundException(final String message, final Throwable cause, final boolean enableSuppression, final boolean writableStackTrace) {
         super(message, cause, enableSuppression, writableStackTrace);
     }
 }
