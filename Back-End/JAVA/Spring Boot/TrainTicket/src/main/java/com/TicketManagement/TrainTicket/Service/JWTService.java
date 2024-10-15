@@ -89,17 +89,11 @@ public class JWTService {
     }
 
     private Claims extractAllClaims(final String token) {
-        try {
             return Jwts.parser()
                     .verifyWith(getKey())
                     .build()
                     .parseSignedClaims(token)
                     .getPayload();
 
-        } catch (ExpiredJwtException e) {
-            throw new TokenNotFoundException("Your token has expired. Please log in again.");
-        } catch (Exception e) {
-            throw new RuntimeException("Invalid token");
-        }
     }
 }

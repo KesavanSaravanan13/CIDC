@@ -2,10 +2,7 @@ package com.TicketManagement.TrainTicket.service;
 
 import com.TicketManagement.TrainTicket.dto.UserDTO;
 import com.TicketManagement.TrainTicket.entity.User;
-import com.TicketManagement.TrainTicket.exception.NoIdMatchedException;
-import com.TicketManagement.TrainTicket.exception.NotAnActiveUserException;
-import com.TicketManagement.TrainTicket.exception.NotAuthenticatedException;
-import com.TicketManagement.TrainTicket.exception.UserNotFoundException;
+import com.TicketManagement.TrainTicket.exception.*;
 import com.TicketManagement.TrainTicket.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.ApplicationContext;
@@ -45,6 +42,10 @@ public class UserService {
     }
 
     public UserDTO getUserById(final Long id) {
+        if(id==null){
+            throw new InputMantatoryException("Missing ID for User Removal");
+        }
+        System.out.println(id+"jhvcy");
         User user = this.userRepo.findById(id).orElseThrow(() -> new UserNotFoundException("User Not Found"));
         if (user.getStatus())
             return new UserDTO(user.getUserId(), user.getUserName(), user.getAddress(), user.getPhoneNumber(), user.getStatus());
