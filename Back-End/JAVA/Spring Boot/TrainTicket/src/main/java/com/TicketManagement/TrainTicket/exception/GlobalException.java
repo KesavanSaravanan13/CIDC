@@ -1,7 +1,7 @@
 package com.TicketManagement.TrainTicket.exception;
 
 
-import com.TicketManagement.TrainTicket.entity.Error;
+import com.TicketManagement.TrainTicket.entity.ResponseMessage;
 import com.TicketManagement.TrainTicket.service.ErrorService;
 import io.jsonwebtoken.ExpiredJwtException;
 import lombok.RequiredArgsConstructor;
@@ -28,7 +28,7 @@ public class GlobalException {
             NoDataFoundException.class
     })
     public ResponseEntity<?> handleTokenNotFoundException(Exception ex) {
-        Error errorMessage = errorService.getErrorCode(ex.getMessage(),HttpStatus.BAD_REQUEST);
+        ResponseMessage errorMessage = errorService.getErrorCode(ex.getMessage(),HttpStatus.BAD_REQUEST);
         return new ResponseEntity<>(errorMessage, HttpStatus.BAD_REQUEST);
     }
 }

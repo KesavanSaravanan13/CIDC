@@ -11,12 +11,4 @@ import java.util.List;
 @Setter
 public class Response {
     private List<UserDTO> user;
-
-//    @Override
-//    public String toString() {
-//        return "{\n" +
-//                "  \"user\": " + (user != null ? user.toString() : "null") + "\n" +
-//                "}";
-//    }
-
 }

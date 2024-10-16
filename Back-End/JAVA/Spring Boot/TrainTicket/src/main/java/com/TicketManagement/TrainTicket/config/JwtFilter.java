@@ -1,8 +1,7 @@
 package com.TicketManagement.TrainTicket.config;
 
-import com.TicketManagement.TrainTicket.controller.UserController;
 import com.TicketManagement.TrainTicket.dto.Response;
-import com.TicketManagement.TrainTicket.entity.Error;
+import com.TicketManagement.TrainTicket.entity.ResponseMessage;
 import com.TicketManagement.TrainTicket.service.JWTService;
 import com.TicketManagement.TrainTicket.service.MyUserDetailsService;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -65,20 +64,19 @@ public class JwtFilter extends OncePerRequestFilter {
             response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
             Long errorCode = (long) response.getStatus();
             String errorStatus = String.valueOf(HttpStatus.BAD_REQUEST);
-            Error error = new Error();
-            error.setCode(errorCode);
-            error.setMessage("Token Expired - "+e.getMessage());
-            error.setStatus("error");
-            error.setRequestedTime(Instant.now().toEpochMilli());
-            error.setValidationErrors(errorStatus);
+            ResponseMessage ResponseMessage = new ResponseMessage();
+            ResponseMessage.setCode(errorCode);
+            ResponseMessage.setMessage("Token Expired - " + e.getMessage());
+            ResponseMessage.setStatus("error");
+            ResponseMessage.setRequestedTime(Instant.now().toEpochMilli());
+            ResponseMessage.setValidationErrors(errorStatus);
             Response response01 = new Response();
-            UserController userController = context.getBean(UserController.class);
             response01.setUser(null);
-            error.setResponse(response01);
+            ResponseMessage.setResponse(null);
 
             ObjectMapper objectMapper = new ObjectMapper();
 
-            String jsonResponse = objectMapper.writeValueAsString(error);
+            String jsonResponse = objectMapper.writeValueAsString(ResponseMessage);
 
             response.setContentType("application/json");
             response.getWriter().write(jsonResponse);
