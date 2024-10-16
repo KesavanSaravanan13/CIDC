@@ -19,6 +19,20 @@ public class Error {
     private String message;
     private String validationErrors;
     private long requestedTime;
+//
+//    @Override
+//    public String toString() {
+//        return "{" +
+//                "\"code\": " + code + ",\n" +
+//                "\"status\": \"" + status + "\",\n" +
+//                "\"message\": \"" + message + "\",\n" +
+//                "\"validationErrors\": \"" + validationErrors + "\",\n" +
+//                "\"requestedTime\": " + requestedTime + ",\n" +
+//                "\"response\": " + response + "\n" +
+//                "}";
+//    }
+//
+
     private Response response;
 
 }

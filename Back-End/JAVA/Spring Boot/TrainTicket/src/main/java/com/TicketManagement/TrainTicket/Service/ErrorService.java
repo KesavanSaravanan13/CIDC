@@ -12,7 +12,6 @@ import java.time.Instant;
 @Service
 @RequiredArgsConstructor
 public class ErrorService {
-
     private final UserController userController;
 
     public Error getErrorCode(String message, HttpStatus code) {

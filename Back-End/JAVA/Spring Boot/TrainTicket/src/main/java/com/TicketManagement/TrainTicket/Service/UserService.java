@@ -32,6 +32,9 @@ public class UserService {
                 userList.add(new UserDTO(user.getUserId(), user.getUserName(), user.getAddress(), user.getPhoneNumber(), user.getStatus()));
             }
         });
+        if (userList.isEmpty()) {
+            throw new NoDataFoundException("No Data Found");
+        }
         return userList;
     }
 
@@ -42,15 +45,15 @@ public class UserService {
     }
 
     public UserDTO getUserById(final Long id) {
-        if(id==null){
-            throw new InputMantatoryException("Missing ID for User Removal");
+        if (id==null) {
+            throw new InputMantatoryException("No Id Given");
         }
-        System.out.println(id+"jhvcy");
         User user = this.userRepo.findById(id).orElseThrow(() -> new UserNotFoundException("User Not Found"));
         if (user.getStatus())
             return new UserDTO(user.getUserId(), user.getUserName(), user.getAddress(), user.getPhoneNumber(), user.getStatus());
         else
             throw new NotAnActiveUserException("Not an Active User");
+
     }
 
     public List<UserDTO> getAllUsers() {
@@ -70,8 +73,7 @@ public class UserService {
                 userDTO.setAddress(user.getAddress());
                 saveUser(userDTO);
                 str[0] = "Deleted";
-            }
-            else{
+            } else {
                 throw new NoIdMatchedException("No ID Matched");
             }
         });
@@ -80,16 +82,33 @@ public class UserService {
 
 
     public String verifyUser(final User user) {
-        Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(user.getUserName(), user.getPassword()));
-        if (authentication.isAuthenticated()) {
-            if (userRepo.getByUserName(user.getUserName()).getStatus())
-                return jwtService.generateToken(user.getUserName());
-            else {
-                throw new NotAnActiveUserException("Not an Active User");
+        try {
+            User userTemp = userRepo.getByUserName(user.getUserName());
+            if (userTemp == null) {
+                throw new InvalidUserException("Invalid User");
             }
-        }
-        else{
-            throw new NotAuthenticatedException("Not Authenticated");
+            BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+            if (!passwordEncoder.matches(user.getPassword(), userTemp.getPassword())) {
+                throw new PasswordNotMatchException("Password Not Matched");
+            }
+            Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(user.getUserName(), user.getPassword()));
+            if (authentication.isAuthenticated()) {
+                if (userRepo.getByUserName(user.getUserName()).getStatus())
+                    return jwtService.generateToken(user.getUserName());
+                else {
+                    throw new NotAnActiveUserException("Not an Active User");
+                }
+            } else {
+                throw new NotAuthenticatedException("Not Authenticated");
+            }
+        } catch (InvalidUserException ex) {
+            throw new InvalidUserException("Invalid User");
+        } catch (NotAnActiveUserException ex) {
+            throw new NotAnActiveUserException("Not an Active User");
+        } catch (PasswordNotMatchException ex) {
+            throw new PasswordNotMatchException("Password Not Matched");
+        } catch (Exception ex) {
+            throw new NotAuthenticatedException("Failed to authenticate the user");
         }
     }
 }

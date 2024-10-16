@@ -2,6 +2,7 @@ package com.TicketManagement.TrainTicket.service;
 
 import com.TicketManagement.TrainTicket.dto.TicketDTO;
 import com.TicketManagement.TrainTicket.entity.TicketDetails;
+import com.TicketManagement.TrainTicket.exception.NoDataFoundException;
 import com.TicketManagement.TrainTicket.repository.TicketDetailsRepository;
 import com.TicketManagement.TrainTicket.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -36,6 +37,9 @@ public class TicketService {
                 ticketList.add(ticketDTO);
             }
         });
+        if(ticketList.isEmpty()){
+            throw new NoDataFoundException("No Data Found");
+        }
         return ticketList;
     }
 

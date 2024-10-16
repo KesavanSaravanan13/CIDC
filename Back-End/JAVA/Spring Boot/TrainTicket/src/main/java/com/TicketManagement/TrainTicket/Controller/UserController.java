@@ -12,6 +12,7 @@ import org.aspectj.apache.bcel.classfile.Module;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/user")
@@ -27,9 +28,6 @@ public class UserController {
 
     @GetMapping("/{id}")
     public UserDTO getUserById(@PathVariable final Long id) {
-        if (id == null) {
-            throw new InputMantatoryException("Missing ID for User Retrieval");
-        }
         return this.userService.getUserById(id);
     }
 
