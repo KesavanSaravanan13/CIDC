@@ -3,21 +3,25 @@ package com.TicketManagement.TrainTicket.dto;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.stereotype.Component;
 
+@Component
 @Getter
 @Setter
 public class UserDTO {
 
     private Long userId;
-    @Getter
     private String userName;
     private String address;
     private String phoneNumber;
     private boolean status;
 
-    public UserDTO(Long userId, String name, String address, String phoneNumber, boolean status) {
+    public UserDTO() {
+    }
+
+    public UserDTO(Long userId, String userName, String address, String phoneNumber, boolean status) {
         this.userId = userId;
-        this.userName = name;
+        this.userName = userName;
         this.address = address;
         this.phoneNumber = phoneNumber;
         this.status = status;
@@ -26,4 +30,5 @@ public class UserDTO {
     public boolean getStatus() {
         return this.status;
     }
+
 }

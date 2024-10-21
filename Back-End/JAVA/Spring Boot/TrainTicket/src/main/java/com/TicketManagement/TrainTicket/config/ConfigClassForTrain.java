@@ -30,7 +30,7 @@ public class ConfigClassForTrain {
 
         http.csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(request -> request
-                        .requestMatchers("user/login")
+                        .requestMatchers("user/login","/user")
                         .permitAll()
                         .anyRequest().authenticated())
                 .formLogin(Customizer.withDefaults())

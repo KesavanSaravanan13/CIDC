@@ -2,31 +2,21 @@ package com.TicketManagement.TrainTicket.entity;
 
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 @Entity
 @Table(name = "user")
 @Getter
 @Setter
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
 public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "user_id")
     private Long userId;
-
-    @Override
-    public String toString() {
-        return "User{" +
-                "userId=" + userId +
-                ", password='" + password + '\'' +
-                ", userName='" + userName + '\'' +
-                ", address='" + address + '\'' +
-                ", phoneNumber='" + phoneNumber + '\'' +
-                ", status=" + status +
-                '}';
-    }
 
     private String password;
 
@@ -42,7 +32,24 @@ public class User {
     @Column(name = "status")
     private boolean status;
 
+    public User(Long userId, String userName, String address, String phoneNumber, boolean status) {
+    }
+
+
+
     public boolean getStatus() {
         return this.status;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "userId=" + userId +
+                ", password='" + password + '\'' +
+                ", userName='" + userName + '\'' +
+                ", address='" + address + '\'' +
+                ", phoneNumber='" + phoneNumber + '\'' +
+                ", status=" + status +
+                '}';
     }
 }
