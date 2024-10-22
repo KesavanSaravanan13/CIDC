@@ -39,15 +39,11 @@ public class UserService {
     }
 
     public void saveUser(final User user) {
-        getUserDetails();
         user.setPassword(encrypt.encode(user.getPassword()));
         this.userRepo.save(user);
     }
 
     public UserDTO getUserById(final Long id) {
-        if (id==null) {
-            throw new InputMantatoryException("No Id Given");
-        }
         User user = this.userRepo.findById(id).orElseThrow(() -> new UserNotFoundException("User Not Found"));
         if (user.getStatus())
             return new UserDTO(user.getUserId(), user.getUserName(), user.getAddress(), user.getPhoneNumber(), user.getStatus());
@@ -63,7 +59,10 @@ public class UserService {
     public String deleteUser(final Long userId) {
         final String[] str = {""};
         str[0] = "No Id Matched";
-        getUserDetails().forEach(user -> {
+        if (userId == null){
+            throw new NoDataFoundException("No Data Found");
+        }
+        userRepo.findAll().forEach(user -> {
             if (user.getUserId().equals(userId)) {
                 user.setStatus(false);
                 User userDTO = new User();
@@ -71,9 +70,10 @@ public class UserService {
                 userDTO.setStatus(user.getStatus());
                 userDTO.setUserName(user.getUserName());
                 userDTO.setAddress(user.getAddress());
-                saveUser(userDTO);
+                saveUser(user);
                 str[0] = "Deleted";
-            } else {
+            }
+            else {
                 throw new NoIdMatchedException("No ID Matched");
             }
         });
@@ -107,7 +107,7 @@ public class UserService {
             throw new NotAnActiveUserException("Not an Active User");
         } catch (PasswordNotMatchException ex) {
             throw new PasswordNotMatchException("Password Not Matched");
-        } catch (Exception ex) {
+        } catch (NotAuthenticatedException ex) {
             throw new NotAuthenticatedException("Failed to authenticate the user");
         }
     }
