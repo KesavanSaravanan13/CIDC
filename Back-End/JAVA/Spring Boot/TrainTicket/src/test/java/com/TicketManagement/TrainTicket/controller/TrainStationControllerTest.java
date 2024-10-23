@@ -31,10 +31,10 @@ public class TrainStationControllerTest {
     @BeforeEach
     public void setUp() {
         trainStationList = Arrays.asList(
-                new TrainStationDTO(1L, "Station 1", new Place(),true),
-                new TrainStationDTO(2L, "Station 2", new Place(),true)
+                new TrainStationDTO(1L, "Station 1", new Place(), true),
+                new TrainStationDTO(2L, "Station 2", new Place(), true)
         );
-        trainStation = new TrainStationDTO(3L, "Station 3", new Place(),true);
+        trainStation = new TrainStationDTO(3L, "Station 3", new Place(), true);
     }
 
     @Test
@@ -50,7 +50,7 @@ public class TrainStationControllerTest {
     @Test
     public void getTrainStationByIdUT() {
         long stationId = 1L;
-        TrainStationDTO expectedStation = new TrainStationDTO(stationId, "Station 1", new Place(),true);
+        TrainStationDTO expectedStation = new TrainStationDTO(stationId, "Station 1", new Place(), true);
         when(trainStationService.getTrainStationById(stationId)).thenReturn(expectedStation);
 
         TrainStationDTO result = trainStationController.getTrainStationById(stationId);

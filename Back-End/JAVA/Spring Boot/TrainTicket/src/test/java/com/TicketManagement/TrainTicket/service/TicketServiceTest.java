@@ -12,6 +12,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
@@ -154,5 +155,37 @@ class TicketServiceTest {
 
         assertEquals("No Id Matched", result);
         verify(ticketRepo, never()).save(any());
+    }
+
+
+    @Test
+    void getAllTickets_ShouldReturnListOfTickets() {
+        TicketDetails ticketDetails1 = new TicketDetails();
+        ticketDetails1.setTicketId(1L);
+        ticketDetails1.setTicketNumber(3L);
+        ticketDetails1.setStatus(true);
+
+        TicketDetails ticketDetails2 = new TicketDetails();
+        ticketDetails2.setTicketId(2L);
+        ticketDetails2.setTicketNumber(4L);
+        ticketDetails2.setStatus(true);
+
+        when(ticketRepo.findAll()).thenReturn(Arrays.asList(ticketDetails1, ticketDetails2));
+
+        List<TicketDTO> result = ticketService.getAllTickets();
+
+        assertEquals(2, result.size());
+        assertEquals(3L, result.get(0).getTicketNumber());
+        assertEquals(4L, result.get(1).getTicketNumber());
+    }
+
+    @Test
+    void getAllTickets_ShouldThrowNoDataFoundException_WhenNoTickets() {
+        when(ticketRepo.findAll()).thenReturn(new ArrayList<>());
+
+        NoDataFoundException exception = assertThrows(NoDataFoundException.class, () -> {
+            ticketService.getAllTickets();
+        });
+        assertEquals("No Data Found", exception.getMessage());
     }
 }

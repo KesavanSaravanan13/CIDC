@@ -3,7 +3,6 @@ package com.TicketManagement.TrainTicket.controller;
 import com.TicketManagement.TrainTicket.dto.UserDTO;
 import com.TicketManagement.TrainTicket.entity.User;
 import com.TicketManagement.TrainTicket.service.UserService;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -97,7 +96,7 @@ public class UserControllerTest {
     }
 
     @Test
-    public void deleteUserByIdUT(){
+    public void deleteUserByIdUT() {
         Long userId = 1L;
         UserDTO userDTO = new UserDTO(1L, "Alice", "4th street", "e214", true);
         when(userService.deleteUser(userId)).thenReturn("Deleted");

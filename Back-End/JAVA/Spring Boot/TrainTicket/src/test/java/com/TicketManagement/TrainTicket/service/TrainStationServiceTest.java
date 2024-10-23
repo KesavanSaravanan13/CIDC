@@ -103,4 +103,23 @@ class TrainStationServiceTest {
         verify(trainStationRepo, never()).save(any());
     }
 
+    @Test
+    void getAllTrainStation_ShouldReturnListOfTrains() {
+        TrainStation ticketDetails1 = new TrainStation();
+        ticketDetails1.setStationId(1L);
+        ticketDetails1.setStatus(true);
+
+        TrainStation ticketDetails2 = new TrainStation();
+        ticketDetails2.setStationId(2L);
+        ticketDetails2.setStatus(true);
+
+        when(trainStationRepo.findAll()).thenReturn(Arrays.asList(ticketDetails1, ticketDetails2));
+
+        List<TrainStationDTO> result = trainStationService.getAllTrainStations();
+
+        assertEquals(2, result.size());
+        assertEquals(1L, result.get(0).getStationId());
+        assertEquals(2L, result.get(1).getStationId());
+    }
+
 }
