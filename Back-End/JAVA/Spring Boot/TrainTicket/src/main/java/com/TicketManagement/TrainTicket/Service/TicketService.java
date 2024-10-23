@@ -2,6 +2,7 @@ package com.TicketManagement.TrainTicket.service;
 
 import com.TicketManagement.TrainTicket.dto.TicketDTO;
 import com.TicketManagement.TrainTicket.entity.TicketDetails;
+import com.TicketManagement.TrainTicket.entity.TrainStation;
 import com.TicketManagement.TrainTicket.exception.NoDataFoundException;
 import com.TicketManagement.TrainTicket.repository.TicketDetailsRepository;
 import com.TicketManagement.TrainTicket.repository.UserRepository;
@@ -10,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -44,7 +46,6 @@ public class TicketService {
     }
 
     public void saveTicket(final TicketDTO ticket) {
-        getTicketDetails();
         TicketDetails ticketDetails = new TicketDetails();
         ticketDetails.setTicketId(ticket.getTicketId());
         ticketDetails.setTicketNumber(ticket.getTicketNumber());
@@ -83,16 +84,14 @@ public class TicketService {
     }
 
     public String deleteTicket(final Long ticketId) {
-        final String[] str = {""};
-        str[0] = "No Id Matched";
-        getTicketDetails().forEach(user -> {
-            if (user.getTicketId().equals(ticketId)) {
-                user.setStatus(false);
-                saveTicket(user);
-                str[0] = "Deleted";
-            }
-        });
-        return str[0];
+        Optional<TicketDetails> user = ticketRepo.findById(ticketId);
+        if (user.isPresent()) {
+            TicketDetails ticketDetails = user.get();
+            ticketDetails.setStatus(false);
+            ticketRepo.save(ticketDetails);
+            return "Deleted";
+        }
+        return "No Id Matched";
     }
 }
 

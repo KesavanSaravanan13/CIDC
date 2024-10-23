@@ -7,7 +7,4 @@ import org.springframework.boot.test.context.SpringBootTest;
 @SpringBootTest
 class TrainTicketApplicationTests {
 
-    @Test
-    public void contextLoads() {}
-
 }

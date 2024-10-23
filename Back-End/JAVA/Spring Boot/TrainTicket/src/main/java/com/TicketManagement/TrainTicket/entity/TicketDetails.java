@@ -1,7 +1,9 @@
 package com.TicketManagement.TrainTicket.entity;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDate;
@@ -11,6 +13,8 @@ import java.time.LocalTime;
 @Table(name = "ticket_details")
 @Getter
 @Setter
+@AllArgsConstructor
+@NoArgsConstructor
 public class TicketDetails {
 
     @Id

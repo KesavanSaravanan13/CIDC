@@ -3,6 +3,7 @@ package com.TicketManagement.TrainTicket.controller;
 import com.TicketManagement.TrainTicket.dto.UserDTO;
 import com.TicketManagement.TrainTicket.entity.User;
 import com.TicketManagement.TrainTicket.service.UserService;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -37,6 +38,11 @@ public class UserControllerTest {
             new User(3L, "Jane Doe", "456 Oak St, Springfield", "555-5678", false),
             new User(4L, "Alice", "789 Elm St, Springfield", "555-9012", true)
     ));
+
+//    @BeforeEach
+//    public void checkToken(){
+//
+//    }
 
     @Test
     public void getAllUsersUT() {

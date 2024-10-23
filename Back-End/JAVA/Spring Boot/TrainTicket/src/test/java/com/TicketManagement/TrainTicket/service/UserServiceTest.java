@@ -24,7 +24,7 @@ import static org.mockito.Mockito.*;
 public class UserServiceTest {
 
     @Mock
-    private UserRepository userRepository;6
+    private UserRepository userRepository;
 
     @Mock
     private AuthenticationManager authenticationManager;
@@ -46,8 +46,14 @@ public class UserServiceTest {
 
     User USER_04 = new User(4L,
             "$2a$10$Tnrsuq6qTb8fwMtDodheP.TDMQWgDGZKjv9v1SRCxVJPapYKwehdm",
-            "Alice", "789 Elm St, Springfield", "555-9012", true);
 
+            "Alice", "789 Elm St, Springfield", "555-9012", true);
+    List<User> userList = new ArrayList<>(Arrays.asList(
+            USER_01,
+            USER_02,
+            USER_03,
+            USER_04
+    ));
     List<UserDTO> userDTOList = new ArrayList<>(Arrays.asList(
             new UserDTO(1L, "Charlie", "788 Oak St, Shelbyville", "556-8765", true),
             new UserDTO(2L, "John Doe", "123 Main St, Springfield", "555-1234", true),
@@ -66,7 +72,31 @@ public class UserServiceTest {
         ));
 
         when(userRepository.findAll()).thenReturn(userDTOList);
-        assertThat(userRepository.findAll()).isEqualTo(userDTOList);
+
+        List<UserDTO> list = userService.getAllUsers();
+
+        assertThat(list).isNotNull();
+        assertThat("Charlie").isEqualTo(list.get(0).getUserName());
+    }
+
+    @Test
+    public void getAllUsers_ThrowsNoDataFoundException_WhenNoActiveUsersExist() {
+        User user = USER_03;
+
+        List<User> list = Arrays.asList(user);
+
+        when(userRepository.findAll()).thenReturn(list);
+
+        NoDataFoundException exception = assertThrows(NoDataFoundException.class, () -> userService.getAllUsers());
+        assertEquals("No Data Found", exception.getMessage());
+    }
+
+    @Test
+    public void getAllUsers_ThrowsNoDataFoundException_WhenNoUsersExist() {
+        when(userRepository.findAll()).thenReturn(new ArrayList<>());
+
+        NoDataFoundException exception = assertThrows(NoDataFoundException.class, () -> userService.getAllUsers());
+        assertEquals("No Data Found", exception.getMessage());
     }
 
     @Test

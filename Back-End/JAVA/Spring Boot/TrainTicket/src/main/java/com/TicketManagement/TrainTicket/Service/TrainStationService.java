@@ -1,6 +1,8 @@
 package com.TicketManagement.TrainTicket.service;
 
 import com.TicketManagement.TrainTicket.dto.TrainStationDTO;
+import com.TicketManagement.TrainTicket.dto.UserDTO;
+import com.TicketManagement.TrainTicket.entity.Place;
 import com.TicketManagement.TrainTicket.entity.TrainStation;
 import com.TicketManagement.TrainTicket.repository.PlaceRepository;
 import com.TicketManagement.TrainTicket.repository.TrainStationRepository;
@@ -9,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -33,8 +36,8 @@ public class TrainStationService {
         trainStation.setStationId(trainStationDTO.getStationId());
         trainStation.setStationName(trainStationDTO.getStationName());
         trainStation.setStatus(trainStationDTO.getStatus());
-        trainStation.setPlace(this.PlaceRepo.findById(trainStationDTO.getPlace().getPlaceId()).orElseThrow(() ->
-            new RuntimeException("No Place Found")
+        trainStation.setPlace(this.PlaceRepo.findById(trainStationDTO.getPlace().getPlaceId()).orElseThrow(
+                ()->new RuntimeException("No Place Found")
         ));
         this.trainStationRepo.save(trainStation);
     }
@@ -49,16 +52,14 @@ public class TrainStationService {
     }
 
     public String deleteTrainStation(final Long stationId) {
-        final String[] str = {""};
-        str[0] = "No Id Matched";
-        getTrainDetails().forEach(user -> {
-            if (user.getStationId().equals(stationId)) {
-                user.setStatus(false);
-                saveTrainStation(user);
-                str[0] = "Deleted";
-            }
-        });
-        return str[0];
+        Optional<TrainStation> user = trainStationRepo.findById(stationId);
+        if (user.isPresent()) {
+            TrainStation trainStation = user.get();
+            trainStation.setStatus(false);
+            trainStationRepo.save(trainStation);
+            return "Deleted";
+        }
+        return "No Id Matched";
     }
 }
 
