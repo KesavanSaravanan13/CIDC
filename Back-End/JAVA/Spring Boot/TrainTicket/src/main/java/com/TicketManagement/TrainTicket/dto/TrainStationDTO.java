@@ -31,7 +31,7 @@ public class TrainStationDTO {
     }
 
     public Optional<Place> getPlaceByName(String name) {
-        return placeRepository.findByName(name);
+        return placeRepository.findByPlaceName(name);
     }
 
     public boolean getStatus() {
