@@ -2,7 +2,6 @@ package com.TicketManagement.TrainTicket.controller;
 
 import com.TicketManagement.TrainTicket.dto.PlaceDTO;
 import com.TicketManagement.TrainTicket.service.PlaceService;
-import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 

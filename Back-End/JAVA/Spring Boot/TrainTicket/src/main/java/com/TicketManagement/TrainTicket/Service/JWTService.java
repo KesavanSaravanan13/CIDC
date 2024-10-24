@@ -2,7 +2,6 @@ package com.TicketManagement.TrainTicket.service;
 
 import com.TicketManagement.TrainTicket.exception.TokenNotFoundException;
 import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.io.Decoders;
@@ -89,11 +88,11 @@ public class JWTService {
     }
 
     private Claims extractAllClaims(final String token) {
-            return Jwts.parser()
-                    .verifyWith(getKey())
-                    .build()
-                    .parseSignedClaims(token)
-                    .getPayload();
+        return Jwts.parser()
+                .verifyWith(getKey())
+                .build()
+                .parseSignedClaims(token)
+                .getPayload();
 
     }
 }

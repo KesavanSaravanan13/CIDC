@@ -59,7 +59,7 @@ public class UserService {
     public String deleteUser(final Long userId) {
         final String[] str = {""};
         str[0] = "No Id Matched";
-        if (userId == null){
+        if (userId == null) {
             throw new NoDataFoundException("No Data Found");
         }
         userRepo.findAll().forEach(user -> {
@@ -72,8 +72,7 @@ public class UserService {
                 userDTO.setAddress(user.getAddress());
                 saveUser(user);
                 str[0] = "Deleted";
-            }
-            else {
+            } else {
                 throw new NoIdMatchedException("No ID Matched");
             }
         });

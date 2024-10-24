@@ -36,7 +36,6 @@ public class User {
     }
 
 
-
     public boolean getStatus() {
         return this.status;
     }

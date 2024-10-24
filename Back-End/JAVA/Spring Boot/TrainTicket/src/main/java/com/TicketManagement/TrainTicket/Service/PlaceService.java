@@ -36,8 +36,8 @@ public class PlaceService {
     }
 
     public PlaceDTO getPlaceById(final Long id) {
-        Place place = this.placeRepo.findById(id).orElseThrow(()->new RuntimeException("Not Found"));
-        return new PlaceDTO(place.getPlaceId(),place.getPlaceName(),place.getNoOfStations(),place.getStatus());
+        Place place = this.placeRepo.findById(id).orElseThrow(() -> new RuntimeException("Not Found"));
+        return new PlaceDTO(place.getPlaceId(), place.getPlaceName(), place.getNoOfStations(), place.getStatus());
     }
 
     public List<PlaceDTO> getAllPlaces() {

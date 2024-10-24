@@ -2,7 +2,6 @@ package com.TicketManagement.TrainTicket.service;
 
 import com.TicketManagement.TrainTicket.dto.TicketDTO;
 import com.TicketManagement.TrainTicket.entity.TicketDetails;
-import com.TicketManagement.TrainTicket.entity.TrainStation;
 import com.TicketManagement.TrainTicket.exception.NoDataFoundException;
 import com.TicketManagement.TrainTicket.repository.TicketDetailsRepository;
 import com.TicketManagement.TrainTicket.repository.UserRepository;
@@ -39,7 +38,7 @@ public class TicketService {
                 ticketList.add(ticketDTO);
             }
         });
-        if(ticketList.isEmpty()){
+        if (ticketList.isEmpty()) {
             throw new NoDataFoundException("No Data Found");
         }
         return ticketList;
@@ -63,7 +62,7 @@ public class TicketService {
     }
 
     public TicketDTO getTicketById(final Long id) {
-        TicketDetails ticketDetails = this.ticketRepo.findById(id).orElseThrow(()->new RuntimeException("Not Found"));
+        TicketDetails ticketDetails = this.ticketRepo.findById(id).orElseThrow(() -> new RuntimeException("Not Found"));
         TicketDTO ticketDTO = new TicketDTO();
         ticketDTO.setTicketId(ticketDetails.getTicketId());
         ticketDTO.setTicketNumber(ticketDetails.getTicketNumber());

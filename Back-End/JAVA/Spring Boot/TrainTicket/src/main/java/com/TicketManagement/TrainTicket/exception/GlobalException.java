@@ -28,7 +28,7 @@ public class GlobalException {
             NoDataFoundException.class
     })
     public ResponseEntity<?> handleTokenNotFoundException(Exception ex) {
-        ResponseMessage errorMessage = errorService.getErrorCode(ex.getMessage(),HttpStatus.BAD_REQUEST);
+        ResponseMessage errorMessage = errorService.getErrorCode(ex.getMessage(), HttpStatus.BAD_REQUEST);
         return new ResponseEntity<>(errorMessage, HttpStatus.BAD_REQUEST);
     }
 }

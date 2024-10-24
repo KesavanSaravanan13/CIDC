@@ -1,8 +1,6 @@
 package com.TicketManagement.TrainTicket.service;
 
 import com.TicketManagement.TrainTicket.dto.TrainStationDTO;
-import com.TicketManagement.TrainTicket.dto.UserDTO;
-import com.TicketManagement.TrainTicket.entity.Place;
 import com.TicketManagement.TrainTicket.entity.TrainStation;
 import com.TicketManagement.TrainTicket.repository.PlaceRepository;
 import com.TicketManagement.TrainTicket.repository.TrainStationRepository;
@@ -37,14 +35,14 @@ public class TrainStationService {
         trainStation.setStationName(trainStationDTO.getStationName());
         trainStation.setStatus(trainStationDTO.getStatus());
         trainStation.setPlace(this.PlaceRepo.findById(trainStationDTO.getPlace().getPlaceId()).orElseThrow(
-                ()->new RuntimeException("No Place Found")
+                () -> new RuntimeException("No Place Found")
         ));
         this.trainStationRepo.save(trainStation);
     }
 
     public TrainStationDTO getTrainStationById(final Long id) {
-        TrainStation trainStation = this.trainStationRepo.findById(id).orElseThrow(()->new RuntimeException("Not Found"));
-        return new TrainStationDTO(trainStation.getStationId(),trainStation.getStationName(),trainStation.getPlace(),trainStation.getStatus());
+        TrainStation trainStation = this.trainStationRepo.findById(id).orElseThrow(() -> new RuntimeException("Not Found"));
+        return new TrainStationDTO(trainStation.getStationId(), trainStation.getStationName(), trainStation.getPlace(), trainStation.getStatus());
     }
 
     public List<TrainStationDTO> getAllTrainStations() {
