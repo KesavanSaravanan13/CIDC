@@ -39,42 +39,42 @@ public class TrainStationControllerTest {
 
     @Test
     public void getAllTrainStationsUT() {
-        when(trainStationService.getAllTrainStations()).thenReturn(trainStationList);
+        when(this.trainStationService.getAllTrainStations()).thenReturn(trainStationList);
 
-        List<TrainStationDTO> result = trainStationController.getAllTrainStations();
+        List<TrainStationDTO> result = this.trainStationController.getAllTrainStations();
 
         assertThat(result).isEqualTo(trainStationList);
-        verify(trainStationService, times(1)).getAllTrainStations();
+        verify(this.trainStationService, times(1)).getAllTrainStations();
     }
 
     @Test
     public void getTrainStationByIdUT() {
         long stationId = 1L;
         TrainStationDTO expectedStation = new TrainStationDTO(stationId, "Station 1", new Place(), true);
-        when(trainStationService.getTrainStationById(stationId)).thenReturn(expectedStation);
+        when(this.trainStationService.getTrainStationById(stationId)).thenReturn(expectedStation);
 
-        TrainStationDTO result = trainStationController.getTrainStationById(stationId);
+        TrainStationDTO result = this.trainStationController.getTrainStationById(stationId);
 
         assertThat(result).isEqualTo(expectedStation);
-        verify(trainStationService, times(1)).getTrainStationById(stationId);
+        verify(this.trainStationService, times(1)).getTrainStationById(stationId);
     }
 
     @Test
     public void saveTrainStationUT() {
-        trainStationController.getTrainStationById(trainStation);
+        this.trainStationController.getTrainStationById(trainStation);
 
-        verify(trainStationService, times(1)).saveTrainStation(trainStation);
+        verify(this.trainStationService, times(1)).saveTrainStation(trainStation);
     }
 
     @Test
     public void deleteTrainStationUT() {
         long stationId = 1L;
-        when(trainStationService.deleteTrainStation(stationId)).thenReturn("Deleted");
+        when(this.trainStationService.deleteTrainStation(stationId)).thenReturn("Deleted");
 
-        String result = trainStationController.deleteTrainStation(stationId);
+        String result = this.trainStationController.deleteTrainStation(stationId);
 
         assertThat(result).isEqualTo("Deleted");
-        verify(trainStationService, times(1)).deleteTrainStation(stationId);
+        verify(this.trainStationService, times(1)).deleteTrainStation(stationId);
     }
 }
 

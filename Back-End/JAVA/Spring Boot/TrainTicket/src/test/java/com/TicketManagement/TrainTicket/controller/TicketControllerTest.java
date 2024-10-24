@@ -36,9 +36,9 @@ public class TicketControllerTest {
         ticket2.setTicketId(2L);
         ticket2.setTicketNumber(3L);
 
-        when(ticketDetailsService.getAllTickets()).thenReturn(Arrays.asList(ticket1, ticket2));
+        when(this.ticketDetailsService.getAllTickets()).thenReturn(Arrays.asList(ticket1, ticket2));
 
-        List<TicketDTO> result = ticketDetailsController.getAllTickets();
+        List<TicketDTO> result = this.ticketDetailsController.getAllTickets();
 
         assertEquals(2, result.size());
         assertEquals(3L, result.get(0).getTicketNumber());
@@ -50,9 +50,9 @@ public class TicketControllerTest {
         ticketDTO.setTicketId(1L);
         ticketDTO.setTicketNumber(3L);
 
-        when(ticketDetailsService.getTicketById(1L)).thenReturn(ticketDTO);
+        when(this.ticketDetailsService.getTicketById(1L)).thenReturn(ticketDTO);
 
-        TicketDTO result = ticketDetailsController.getTicketById(1L);
+        TicketDTO result = this.ticketDetailsController.getTicketById(1L);
 
         assertEquals(3L, result.getTicketNumber());
     }
@@ -63,28 +63,28 @@ public class TicketControllerTest {
         ticketDTO.setTicketId(1L);
         ticketDTO.setTicketNumber(3L);
 
-        ticketDetailsController.createTicket(ticketDTO);
+        this.ticketDetailsController.createTicket(ticketDTO);
 
-        verify(ticketDetailsService, times(1)).saveTicket(ticketDTO);
+        verify(this.ticketDetailsService, times(1)).saveTicket(ticketDTO);
     }
 
     @Test
     void deleteTicket_ShouldReturnDeletedMessage() {
-        when(ticketDetailsService.deleteTicket(1L)).thenReturn("Deleted");
+        when(this.ticketDetailsService.deleteTicket(1L)).thenReturn("Deleted");
 
-        String result = ticketDetailsController.deleteTicket(1L);
+        String result = this.ticketDetailsController.deleteTicket(1L);
 
         assertEquals("Deleted", result);
-        verify(ticketDetailsService, times(1)).deleteTicket(1L);
+        verify(this.ticketDetailsService, times(1)).deleteTicket(1L);
     }
 
     @Test
     void deleteTicket_ShouldReturnNoIdMatchedMessage() {
-        when(ticketDetailsService.deleteTicket(1L)).thenReturn("No Id Matched");
+        when(this.ticketDetailsService.deleteTicket(1L)).thenReturn("No Id Matched");
 
-        String result = ticketDetailsController.deleteTicket(1L);
+        String result = this.ticketDetailsController.deleteTicket(1L);
 
         assertEquals("No Id Matched", result);
-        verify(ticketDetailsService, times(1)).deleteTicket(1L);
+        verify(this.ticketDetailsService, times(1)).deleteTicket(1L);
     }
 }

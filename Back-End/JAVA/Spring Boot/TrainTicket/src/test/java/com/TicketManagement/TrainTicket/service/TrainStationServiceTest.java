@@ -39,9 +39,9 @@ class TrainStationServiceTest {
     void getTrainDetails_ShouldReturnListOfActiveTrainStations() {
         TrainStation trainStation1 = new TrainStation(1L, "Station A", new Place(), true);
         TrainStation trainStation2 = new TrainStation(2L, "Station B", new Place(), false);
-        when(trainStationRepo.findAll()).thenReturn(Arrays.asList(trainStation1, trainStation2));
+        when(this.trainStationRepo.findAll()).thenReturn(Arrays.asList(trainStation1, trainStation2));
 
-        List<TrainStationDTO> result = trainStationService.getTrainDetails();
+        List<TrainStationDTO> result = this.trainStationService.getTrainDetails();
 
         assertEquals(1, result.size());
         assertEquals("Station A", result.get(0).getStationName());
@@ -51,29 +51,29 @@ class TrainStationServiceTest {
     void saveTrainStation_ShouldSaveTrainStation() {
         Place place = new Place(1L, "Place A", 5, true);
         TrainStationDTO trainStationDTO = new TrainStationDTO(1L, "Station A", place, true);
-        when(placeRepo.findById(any(Long.class))).thenReturn(Optional.of(place));
+        when(this.placeRepo.findById(any(Long.class))).thenReturn(Optional.of(place));
 
-        trainStationService.saveTrainStation(trainStationDTO);
+        this.trainStationService.saveTrainStation(trainStationDTO);
 
-        verify(trainStationRepo, times(1)).save(any(TrainStation.class));
+        verify(this.trainStationRepo, times(1)).save(any(TrainStation.class));
     }
 
     @Test
     void getTrainStationById_ShouldReturnTrainStationDTO() {
         TrainStation trainStation = new TrainStation(1L, "Station A", new Place(), true);
-        when(trainStationRepo.findById(1L)).thenReturn(Optional.of(trainStation));
+        when(this.trainStationRepo.findById(1L)).thenReturn(Optional.of(trainStation));
 
-        TrainStationDTO result = trainStationService.getTrainStationById(1L);
+        TrainStationDTO result = this.trainStationService.getTrainStationById(1L);
 
         assertEquals("Station A", result.getStationName());
     }
 
     @Test
     void getTrainStationById_ShouldThrowExceptionWhenNotFound() {
-        when(trainStationRepo.findById(1L)).thenReturn(Optional.empty());
+        when(this.trainStationRepo.findById(1L)).thenReturn(Optional.empty());
 
         Exception exception = assertThrows(RuntimeException.class, () -> {
-            trainStationService.getTrainStationById(1L);
+            this.trainStationService.getTrainStationById(1L);
         });
 
         assertEquals("Not Found", exception.getMessage());
@@ -84,23 +84,23 @@ class TrainStationServiceTest {
         Place place = new Place(1L, "Place A", 5, true); // Create a Place instance
         TrainStation trainStation = new TrainStation(1L, "Station A", place, true); // Create a TrainStation instance
 
-        when(trainStationRepo.findById(1L)).thenReturn(Optional.of(trainStation));
+        when(this.trainStationRepo.findById(1L)).thenReturn(Optional.of(trainStation));
 
-        String result = trainStationService.deleteTrainStation(1L);
+        String result = this.trainStationService.deleteTrainStation(1L);
 
         assertEquals("Deleted", result);
         assertFalse(trainStation.getStatus());
-        verify(trainStationRepo, times(1)).save(trainStation);
+        verify(this.trainStationRepo, times(1)).save(trainStation);
     }
 
     @Test
     void deleteTrainStation_ShouldReturnNoIdMatchedMessage() {
-        when(trainStationRepo.findById(1L)).thenReturn(Optional.empty());
+        when(this.trainStationRepo.findById(1L)).thenReturn(Optional.empty());
 
-        String result = trainStationService.deleteTrainStation(1L);
+        String result = this.trainStationService.deleteTrainStation(1L);
 
         assertEquals("No Id Matched", result);
-        verify(trainStationRepo, never()).save(any());
+        verify(this.trainStationRepo, never()).save(any());
     }
 
     @Test
@@ -113,9 +113,9 @@ class TrainStationServiceTest {
         ticketDetails2.setStationId(2L);
         ticketDetails2.setStatus(true);
 
-        when(trainStationRepo.findAll()).thenReturn(Arrays.asList(ticketDetails1, ticketDetails2));
+        when(this.trainStationRepo.findAll()).thenReturn(Arrays.asList(ticketDetails1, ticketDetails2));
 
-        List<TrainStationDTO> result = trainStationService.getAllTrainStations();
+        List<TrainStationDTO> result = this.trainStationService.getAllTrainStations();
 
         assertEquals(2, result.size());
         assertEquals(1L, result.get(0).getStationId());

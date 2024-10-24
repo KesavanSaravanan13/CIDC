@@ -49,9 +49,9 @@ class TicketServiceTest {
         ticket2.setTicketNumber(3L);
         ticket2.setStatus(false);
 
-        when(ticketRepo.findAll()).thenReturn(Arrays.asList(ticket1, ticket2));
+        when(this.ticketRepo.findAll()).thenReturn(Arrays.asList(ticket1, ticket2));
 
-        List<TicketDTO> result = ticketService.getTicketDetails();
+        List<TicketDTO> result = this.ticketService.getTicketDetails();
 
         assertEquals(1, result.size());
         assertEquals(3L, result.get(0).getTicketNumber());
@@ -60,10 +60,10 @@ class TicketServiceTest {
     @Test
     void getTicketDetails_ShouldThrowNoDataFoundExceptionWhenNoActiveTickets() {
 
-        when(ticketRepo.findAll()).thenReturn(Arrays.asList());
+        when(this.ticketRepo.findAll()).thenReturn(Arrays.asList());
 
         Exception exception = assertThrows(NoDataFoundException.class, () -> {
-            ticketService.getTicketDetails();
+            this.ticketService.getTicketDetails();
         });
         assertEquals("No Data Found", exception.getMessage());
     }
@@ -82,12 +82,12 @@ class TicketServiceTest {
         ticketDetails.setTicketId(1L);
         ticketDetails.setTicketNumber(3L);
 
-        when(userRepository.findById(1L)).thenReturn(Optional.of(user));
-        when(ticketRepo.save(any(TicketDetails.class))).thenReturn(ticketDetails);
+        when(this.userRepository.findById(1L)).thenReturn(Optional.of(user));
+        when(this.ticketRepo.save(any(TicketDetails.class))).thenReturn(ticketDetails);
 
-        ticketService.saveTicket(ticketDTO);
+        this.ticketService.saveTicket(ticketDTO);
 
-        verify(ticketRepo, times(1)).save(any(TicketDetails.class));
+        verify(this.ticketRepo, times(1)).save(any(TicketDetails.class));
     }
 
     @Test
@@ -100,34 +100,33 @@ class TicketServiceTest {
         user.setUserId(1L);
         ticketDTO.setUser(user);
 
-        when(userRepository.findById(1L)).thenReturn(Optional.empty());
+        when(this.userRepository.findById(1L)).thenReturn(Optional.empty());
 
         Exception exception = assertThrows(RuntimeException.class, () -> {
-            ticketService.saveTicket(ticketDTO);
+            this.ticketService.saveTicket(ticketDTO);
         });
         assertEquals("User not found", exception.getMessage());
     }
 
     @Test
     void getTicketById_ShouldReturnTicketDTO() {
-        // Arrange
         TicketDetails ticketDetails = new TicketDetails();
         ticketDetails.setTicketId(1L);
         ticketDetails.setTicketNumber(3L);
 
-        when(ticketRepo.findById(1L)).thenReturn(Optional.of(ticketDetails));
+        when(this.ticketRepo.findById(1L)).thenReturn(Optional.of(ticketDetails));
 
-        TicketDTO result = ticketService.getTicketById(1L);
+        TicketDTO result = this.ticketService.getTicketById(1L);
 
         assertEquals(3L, result.getTicketNumber());
     }
 
     @Test
     void getTicketById_ShouldThrowNotFoundExceptionWhenTicketDoesNotExist() {
-        when(ticketRepo.findById(1L)).thenReturn(Optional.empty());
+        when(this.ticketRepo.findById(1L)).thenReturn(Optional.empty());
 
         Exception exception = assertThrows(RuntimeException.class, () -> {
-            ticketService.getTicketById(1L);
+            this.ticketService.getTicketById(1L);
         });
         assertEquals("Not Found", exception.getMessage());
     }
@@ -138,23 +137,23 @@ class TicketServiceTest {
         ticketDetails.setTicketId(1L);
         ticketDetails.setStatus(true);
 
-        when(ticketRepo.findById(1L)).thenReturn(Optional.of(ticketDetails));
+        when(this.ticketRepo.findById(1L)).thenReturn(Optional.of(ticketDetails));
 
-        String result = ticketService.deleteTicket(1L);
+        String result = this.ticketService.deleteTicket(1L);
 
         assertEquals("Deleted", result);
         assertFalse(ticketDetails.getStatus());
-        verify(ticketRepo, times(1)).save(ticketDetails);
+        verify(this.ticketRepo, times(1)).save(ticketDetails);
     }
 
     @Test
     void deleteTicket_ShouldReturnNoIdMatchedMessage() {
-        when(ticketRepo.findById(1L)).thenReturn(Optional.empty());
+        when(this.ticketRepo.findById(1L)).thenReturn(Optional.empty());
 
-        String result = ticketService.deleteTicket(1L);
+        String result = this.ticketService.deleteTicket(1L);
 
         assertEquals("No Id Matched", result);
-        verify(ticketRepo, never()).save(any());
+        verify(this.ticketRepo, never()).save(any());
     }
 
 
@@ -170,9 +169,9 @@ class TicketServiceTest {
         ticketDetails2.setTicketNumber(4L);
         ticketDetails2.setStatus(true);
 
-        when(ticketRepo.findAll()).thenReturn(Arrays.asList(ticketDetails1, ticketDetails2));
+        when(this.ticketRepo.findAll()).thenReturn(Arrays.asList(ticketDetails1, ticketDetails2));
 
-        List<TicketDTO> result = ticketService.getAllTickets();
+        List<TicketDTO> result = this.ticketService.getAllTickets();
 
         assertEquals(2, result.size());
         assertEquals(3L, result.get(0).getTicketNumber());
@@ -181,10 +180,10 @@ class TicketServiceTest {
 
     @Test
     void getAllTickets_ShouldThrowNoDataFoundException_WhenNoTickets() {
-        when(ticketRepo.findAll()).thenReturn(new ArrayList<>());
+        when(this.ticketRepo.findAll()).thenReturn(new ArrayList<>());
 
         NoDataFoundException exception = assertThrows(NoDataFoundException.class, () -> {
-            ticketService.getAllTickets();
+            this.ticketService.getAllTickets();
         });
         assertEquals("No Data Found", exception.getMessage());
     }

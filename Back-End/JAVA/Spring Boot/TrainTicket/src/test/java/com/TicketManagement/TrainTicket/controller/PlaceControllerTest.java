@@ -2,7 +2,6 @@ package com.TicketManagement.TrainTicket.controller;
 
 import com.TicketManagement.TrainTicket.dto.PlaceDTO;
 import com.TicketManagement.TrainTicket.service.PlaceService;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -26,9 +25,9 @@ public class PlaceControllerTest {
     private PlaceController placeController;
 
     List<PlaceDTO> placeDTOList = new ArrayList<>(Arrays.asList(
-            new PlaceDTO(1L, "Springfield", 2,true),
-            new PlaceDTO(2L, "Shelbyville", 3,false),
-            new PlaceDTO(3L, "Ogdenville", 4,true)
+            new PlaceDTO(1L, "Springfield", 2, true),
+            new PlaceDTO(2L, "Shelbyville", 3, false),
+            new PlaceDTO(3L, "Ogdenville", 4, true)
     ));
 
 //    @BeforeEach
@@ -38,43 +37,43 @@ public class PlaceControllerTest {
 
     @Test
     public void createPlaceUT() {
-        PlaceDTO place = new PlaceDTO(1L, "Springfield", 2,true);
-        placeController.createPlace(place);
-        verify(placeService, times(1)).savePlace(place);
+        PlaceDTO place = new PlaceDTO(1L, "Springfield", 2, true);
+        this.placeController.createPlace(place);
+        verify(this.placeService, times(1)).savePlace(place);
     }
 
     @Test
     public void getAllPlacesUT() {
-        when(placeService.getAllPlaces()).thenReturn(placeDTOList);
+        when(this.placeService.getAllPlaces()).thenReturn(placeDTOList);
 
-        List<PlaceDTO> result = placeController.getAllPlaces();
+        List<PlaceDTO> result = this.placeController.getAllPlaces();
 
         assertThat(result).isEqualTo(placeDTOList);
-        verify(placeService, times(1)).getAllPlaces();
+        verify(this.placeService, times(1)).getAllPlaces();
     }
 
     @Test
     public void getPlaceByIdUT() {
         Long placeId = 1L;
-        PlaceDTO placeDTO = new PlaceDTO(1L, "Springfield", 2,true);
+        PlaceDTO placeDTO = new PlaceDTO(1L, "Springfield", 2, true);
 
-        when(placeService.getPlaceById(placeId)).thenReturn(placeDTO);
+        when(this.placeService.getPlaceById(placeId)).thenReturn(placeDTO);
 
-        PlaceDTO result = placeController.getPlaceByName(placeId);
+        PlaceDTO result = this.placeController.getPlaceByName(placeId);
 
         assertThat(result).isEqualTo(placeDTO);
-        verify(placeService, times(1)).getPlaceById(placeId);
+        verify(this.placeService, times(1)).getPlaceById(placeId);
     }
 
     @Test
     public void deletePlaceUT() {
         Long placeId = 1L;
 
-        when(placeService.deletePlace(placeId)).thenReturn("Deleted");
+        when(this.placeService.deletePlace(placeId)).thenReturn("Deleted");
 
-        String result = placeController.deletePlace(placeId);
+        String result = this.placeController.deletePlace(placeId);
 
         assertThat(result).isEqualTo("Deleted");
-        verify(placeService, times(1)).deletePlace(placeId);
+        verify(this.placeService, times(1)).deletePlace(placeId);
     }
 }

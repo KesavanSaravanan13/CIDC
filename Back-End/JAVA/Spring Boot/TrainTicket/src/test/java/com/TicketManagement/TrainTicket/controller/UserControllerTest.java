@@ -24,30 +24,26 @@ public class UserControllerTest {
     @InjectMocks
     private UserController userController;
 
-    List<UserDTO> userDTOList = new ArrayList<>(Arrays.asList(
+    private List<UserDTO> userDTOList = new ArrayList<>(Arrays.asList(
             new UserDTO(1L, "Charlie", "788 Oak St, Shelbyville", "556-8765", true),
             new UserDTO(2L, "John Doe", "123 Main St, Springfield", "555-1234", true),
             new UserDTO(3L, "Jane Doe", "456 Oak St, Springfield", "555-5678", false),
             new UserDTO(4L, "Alice", "789 Elm St, Springfield", "555-9012", true)
     ));
 
-    List<User> userList = new ArrayList<>(Arrays.asList(
+    private List<User> userList = new ArrayList<>(Arrays.asList(
             new User(1L, "Charlie", "788 Oak St, Shelbyville", "556-8765", true),
             new User(2L, "John Doe", "123 Main St, Springfield", "555-1234", true),
             new User(3L, "Jane Doe", "456 Oak St, Springfield", "555-5678", false),
             new User(4L, "Alice", "789 Elm St, Springfield", "555-9012", true)
     ));
 
-//    @BeforeEach
-//    public void checkToken(){
-//
-//    }
 
     @Test
     public void getAllUsersUT() {
 
-        when(userService.getAllUsers()).thenReturn(userDTOList);
-        assertThat(userController.getAllUsers()).isEqualTo(userDTOList);
+        when(this.userService.getAllUsers()).thenReturn(this.userDTOList);
+        assertThat(this.userController.getAllUsers()).isEqualTo(this.userDTOList);
     }
 
     @Test
@@ -61,9 +57,9 @@ public class UserControllerTest {
                 .status(true)
                 .build();
 
-        userController.createUser(user);
+        this.userController.createUser(user);
 
-        verify(userService, times(1)).saveUser(user);
+        verify(this.userService, times(1)).saveUser(user);
     }
 
 
@@ -71,12 +67,12 @@ public class UserControllerTest {
     public void getUserByIdUT() {
         Long userId = 1L;
         UserDTO userDTO = new UserDTO(1L, "Alice", "4th street", "e214", true);
-        when(userService.getUserById(userId)).thenReturn(userDTO);
+        when(this.userService.getUserById(userId)).thenReturn(userDTO);
 
-        UserDTO result = userController.getUserById(userId);
+        UserDTO result = this.userController.getUserById(userId);
 
         assertThat(result).isEqualTo(userDTO);
-        verify(userService, times(1)).getUserById(userId);
+        verify(this.userService, times(1)).getUserById(userId);
     }
 
 
@@ -87,22 +83,22 @@ public class UserControllerTest {
                 .userName("Alice")
                 .password("alice@123")
                 .build();
-        when(userService.verifyUser(user)).thenReturn("Token");
+        when(this.userService.verifyUser(user)).thenReturn("Token");
 
-        String result = userController.loginUser(user);
+        String result = this.userController.loginUser(user);
 
         assertThat(result).isEqualTo("Token");
-        verify(userService, times(1)).verifyUser(user);
+        verify(this.userService, times(1)).verifyUser(user);
     }
 
     @Test
     public void deleteUserByIdUT() {
         Long userId = 1L;
         UserDTO userDTO = new UserDTO(1L, "Alice", "4th street", "e214", true);
-        when(userService.deleteUser(userId)).thenReturn("Deleted");
-        userController.deleteUser(userId);
-        assertThat(userController.getUserById(userId)).isNull();
-        verify(userService, times(1)).deleteUser(userId);
+        when(this.userService.deleteUser(userId)).thenReturn("Deleted");
+        this.userController.deleteUser(userId);
+        assertThat(this.userController.getUserById(userId)).isNull();
+        verify(this.userService, times(1)).deleteUser(userId);
     }
 
 }
