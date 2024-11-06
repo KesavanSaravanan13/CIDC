@@ -34,26 +34,26 @@ public class UserServiceTest {
 
     private User USER_01 = new User(1L,
             "$2a$10$JMoPpfqLU/n9HXyUQqZggubQ2vEWDuQog5ndieuiFECCosOI3YMTG",
-            "Charlie", "788 Oak St, Shelbyville", "556-8765", true);
+            "Charlie", "788 Oak St, Shelbyville", "556-8765", true,"");
 
     private User USER_02 = new User(2L,
             "$2a$10$WpC8r7R0K2oTHeyOLk4Vl.p62IqroB8up2k1izZTyBz0Kg7g9Bac.",
-            "John Doe", "123 Main St, Springfield", "555-1234", true);
+            "John Doe", "123 Main St, Springfield", "555-1234", true,"");
 
     private User USER_03 = new User(3L,
             "$2a$10$HLklNnqP6vlZs7QwTPxb/eo0Q4miZDg2WAbDIQCLBZ6jiy8EtKDHi",
-            "Jane Doe", "456 Oak St, Springfield", "555-5678", false);
+            "Jane Doe", "456 Oak St, Springfield", "555-5678", false,"");
 
     private User USER_04 = new User(4L,
             "$2a$10$Tnrsuq6qTb8fwMtDodheP.TDMQWgDGZKjv9v1SRCxVJPapYKwehdm",
 
-            "Alice", "789 Elm St, Springfield", "555-9012", true);
+            "Alice", "789 Elm St, Springfield", "555-9012", true,"");
 
     private List<UserDTO> userDTOList = new ArrayList<>(Arrays.asList(
-            new UserDTO(1L, "Charlie", "788 Oak St, Shelbyville", "556-8765", true),
-            new UserDTO(2L, "John Doe", "123 Main St, Springfield", "555-1234", true),
-            new UserDTO(3L, "Jane Doe", "456 Oak St, Springfield", "555-5678", false),
-            new UserDTO(4L, "Alice", "789 Elm St, Springfield", "555-9012", true)
+            new UserDTO(1L, "Charlie", "788 Oak St, Shelbyville", "556-8765", true,""),
+            new UserDTO(2L, "John Doe", "123 Main St, Springfield", "555-1234", true,""),
+            new UserDTO(3L, "Jane Doe", "456 Oak St, Springfield", "555-5678", false,""),
+            new UserDTO(4L, "Alice", "789 Elm St, Springfield", "555-9012", true,"")
     ));
 
     @Test

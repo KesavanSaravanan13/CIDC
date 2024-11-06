@@ -9,6 +9,7 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -29,7 +30,7 @@ public class UserService {
         List<UserDTO> userList = new ArrayList<>();
         this.userRepo.findAll().forEach(user -> {
             if (user.getStatus()) {
-                userList.add(new UserDTO(user.getUserId(), user.getUserName(), user.getAddress(), user.getPhoneNumber(), user.getStatus()));
+                userList.add(new UserDTO(user.getUserId(), user.getUserName(), user.getAddress(), user.getPhoneNumber(), user.getStatus(),user.getEmail()));
             }
         });
         if (userList.isEmpty()) {
@@ -46,7 +47,7 @@ public class UserService {
     public UserDTO getUserById(final Long id) {
         User user = this.userRepo.findById(id).orElseThrow(() -> new UserNotFoundException("User Not Found"));
         if (user.getStatus())
-            return new UserDTO(user.getUserId(), user.getUserName(), user.getAddress(), user.getPhoneNumber(), user.getStatus());
+            return new UserDTO(user.getUserId(), user.getUserName(), user.getAddress(), user.getPhoneNumber(), user.getStatus(),user.getEmail());
         else
             throw new NotAnActiveUserException("Not an Active User");
 
@@ -87,7 +88,10 @@ public class UserService {
                 throw new InvalidUserException("Invalid User");
             }
             BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-            if (!passwordEncoder.matches(user.getPassword(), userTemp.getPassword())) {
+            if (
+                    !passwordEncoder.matches(user.getPassword(), userTemp.getPassword())
+//                    !user.getPassword().equals(userTemp.getPassword())
+            ) {
                 throw new PasswordNotMatchException("Password Not Matched");
             }
             Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(user.getUserName(), user.getPassword()));

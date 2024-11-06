@@ -32,7 +32,10 @@ public class User {
     @Column(name = "status")
     private boolean status;
 
-    public User(Long userId, String userName, String address, String phoneNumber, boolean status) {
+    @Column(name="email")
+    private String email;
+
+    public User(Long userId, String userName, String address, String phoneNumber, boolean status,String email) {
     }
 
 
@@ -49,6 +52,7 @@ public class User {
                 ", address='" + address + '\'' +
                 ", phoneNumber='" + phoneNumber + '\'' +
                 ", status=" + status +
+                ", email='" + email + '\'' +
                 '}';
     }
 }

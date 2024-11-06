@@ -10,6 +10,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/place")
 @RequiredArgsConstructor
+@CrossOrigin
 public class PlaceController {
 
     private final PlaceService placeService;
