@@ -61,28 +61,29 @@ public class JwtFilter extends OncePerRequestFilter {
             filterChain.doFilter(request, response);
 
         } catch (ExpiredJwtException e) {
-            response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-            Long errorCode = (long) response.getStatus();
-            String errorStatus = String.valueOf(HttpStatus.BAD_REQUEST);
-            ResponseMessage ResponseMessage = new ResponseMessage();
-            ResponseMessage.setCode(errorCode);
-            ResponseMessage.setMessage("Token Expired - " + e.getMessage());
-            ResponseMessage.setStatus("error");
-            ResponseMessage.setRequestedTime(Instant.now().toEpochMilli());
-            ResponseMessage.setValidationErrors(errorStatus);
-            Response response01 = new Response();
-            response01.setUser(null);
-            ResponseMessage.setResponse(null);
+        response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+        Long errorCode = (long) response.getStatus();
+        String errorStatus = String.valueOf(HttpStatus.UNAUTHORIZED);
+        ResponseMessage ResponseMessage = new ResponseMessage();
+        ResponseMessage.setCode(errorCode);
+        ResponseMessage.setMessage("Token Expired - " + e.getMessage());
+        ResponseMessage.setStatus("error");
+        ResponseMessage.setRequestedTime(Instant.now().toEpochMilli());
+        ResponseMessage.setValidationErrors(errorStatus);
+        Response response01 = new Response();
+        response01.setUser(null);
+        ResponseMessage.setResponse(null);
 
-            ObjectMapper objectMapper = new ObjectMapper();
+        ObjectMapper objectMapper = new ObjectMapper();
 
-            String jsonResponse = objectMapper.writeValueAsString(ResponseMessage);
+        String jsonResponse = objectMapper.writeValueAsString(ResponseMessage);
 
-            response.setContentType("application/json");
-            response.getWriter().write(jsonResponse);
-        } catch (Exception e) {
-            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-            response.getWriter().write("Unauthorized access");
-        }
+        response.setContentType("application/json");
+        response.getWriter().write(jsonResponse);
+    } catch (Exception e) {
+        response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+        response.getWriter().write("Unauthorized access: " + e.getMessage());
     }
+
+}
 }

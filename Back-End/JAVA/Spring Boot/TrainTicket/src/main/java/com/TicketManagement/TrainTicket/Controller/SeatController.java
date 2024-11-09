@@ -4,6 +4,7 @@ import com.TicketManagement.TrainTicket.entity.Seat;
 import com.TicketManagement.TrainTicket.repository.SeatsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -34,21 +35,26 @@ public class SeatController {
 
     @PutMapping("/{id}")
     public ResponseEntity<Seat> updateSeat(@PathVariable Long id, @RequestBody Seat seatDetails) {
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+
         return seatsRepository.findById(id)
                 .map(seat -> {
-                    seat.setOneA(seatDetails.isOneA());
-                    seat.setTwoA(seatDetails.isTwoA());
-                    seat.setThreeA(seatDetails.isThreeA());
-                    seat.setFourA(seatDetails.isFourA());
-                    seat.setFiveA(seatDetails.isFiveA());
-                    seat.setOneB(seatDetails.isOneB());
-                    seat.setTwoB(seatDetails.isTwoB());
-                    seat.setThreeB(seatDetails.isThreeB());
+                    seat.setSeatOneA(seatDetails.isSeatOneA());
+                    seat.setSeatTwoA(seatDetails.isSeatTwoA());
+                    seat.setSeatThreeA(seatDetails.isSeatThreeA());
+                    seat.setSeatFourA(seatDetails.isSeatFourA());
+                    seat.setSeatFiveA(seatDetails.isSeatFiveA());
+                    seat.setSeatSixA(seatDetails.isSeatSixA());
+                    seat.setSeatOneB(seatDetails.isSeatOneB());
+                    seat.setSeatTwoB(seatDetails.isSeatTwoB());
+                    seat.setSeatThreeB(seatDetails.isSeatThreeB());
+                    seat.setSeatFourB(seatDetails.isSeatFourB());
                     seatsRepository.save(seat);
                     return ResponseEntity.ok(seat);
                 })
                 .orElseGet(() -> ResponseEntity.notFound().build());
     }
+
 
 //    @DeleteMapping("/{id}")
 //    public ResponseEntity<Void> deleteSeat(@PathVariable Long id) {

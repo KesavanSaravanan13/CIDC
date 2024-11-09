@@ -4,7 +4,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 @Entity
-@Table(name = "3a_compartment")
+@Table(name = "seats")
 @Getter
 @Setter
 @AllArgsConstructor
@@ -16,39 +16,45 @@ public class Seat {
     private Long seatId;
 
     @Column(nullable = false)
-    private boolean oneA;
+    private boolean seatOneA;
 
     @Column(nullable = false)
-    private boolean twoA;
+    private boolean seatTwoA;
 
     @Column(nullable = false)
-    private boolean threeA;
+    private boolean seatThreeA;
 
     @Column(nullable = false)
-    private boolean fourA;
+    private boolean seatFourA;
 
     @Column(nullable = false)
-    private boolean fiveA;
+    private boolean seatFiveA;
 
     @Column(nullable = false)
-    private boolean oneB;
+    private boolean seatSixA;
 
     @Column(nullable = false)
-    private boolean twoB;
+    private boolean seatOneB;
 
     @Column(nullable = false)
-    private boolean threeB;
+    private boolean seatTwoB;
+
+    @Column(nullable = false)
+    private boolean seatThreeB;
+
+    @Column(nullable = false)
+    private boolean seatFourB;
 
     @ManyToOne
-    @JoinColumn(name = "sl_compartment_id", nullable = false)
+    @JoinColumn(name = "sl_compartment_id")
     private SlCompartment slCompartment;
 
     @ManyToOne
-    @JoinColumn(name = "2a_compartment_id", nullable = false)
+    @JoinColumn(name = "twoa_compartment_id")
     private TwoACompartment twoACompartment;
 
     @ManyToOne
-    @JoinColumn(name = "3a_compartment_id", nullable = false)
+    @JoinColumn(name = "threea_compartment_id")
     private ThreeACompartment threeACompartment;
 
 

@@ -1,6 +1,5 @@
 package com.TicketManagement.TrainTicket.controller;
 
-
 import com.TicketManagement.TrainTicket.dto.UserDTO;
 import com.TicketManagement.TrainTicket.entity.User;
 import com.TicketManagement.TrainTicket.service.UserService;
